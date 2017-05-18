@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="30 seconds">
+
+    <property name="log.base" value="/Users/starlight/logs" />
+    <property name="log.level" value="DEBUG" />
+
+    <!-- Appenders -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%-5level %logger{0} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.base}/SpringSample.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${log.base}/SpringSample.%d{yyyyMMdd}.%i.log</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>5MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%date %-5level [%thread] %logger{0} [%file:%line] - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 3rdparty Logger -->
+    <logger name="org.springframework" level="${log.level}" />
+    <logger name="org.apache.commons" level="INFO" />
+    <logger name="org.apache.tiles" level="INFO" />
+    <logger name="org.apache.ibatis" level="${log.level}" />
+    <logger name="org.apache.shiro" level="${log.level}" />
+    <logger name="org.dozer" level="INFO" />
+    <logger name="org.scribe" level="${log.level}" />
+
+    <!-- Application Logger -->
+    <logger name="com.ectrip.controller" level="${log.level}" />
+
+    <!-- Root Logger -->
+    <root level="${log.level}">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="FILE" />
+    </root>
+
+</configuration>

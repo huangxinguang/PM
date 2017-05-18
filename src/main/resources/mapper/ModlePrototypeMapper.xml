@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ectrip.dao.ModlePrototypeDAO">
+
+	<resultMap type="ModlePrototype" id="modlePrototypeResultMap">
+		<id column="ID" property="id"/>
+		<result column="MODLE_PROTOTYPE_NAME" property="modlePrototypeName"/>
+		<result column="MODLE_PROTOTYPE_DESCRIBE" property="modlePrototypeDescribe"/>
+		<result column="OPERATE_TIME" property="operateTime"/>
+	</resultMap>
+
+	<!--表名 -->
+	<sql id="tableName">
+		MODLE_PROTOTYPE
+	</sql>
+
+	<!-- 字段 -->
+	<sql id="Field">
+		ID,
+		MODLE_PROTOTYPE_NAME,
+		MODLE_PROTOTYPE_DESCRIBE,
+		OPERATE_TIME
+	</sql>
+
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{id},
+		#{modlePrototypeName},
+		#{modlePrototypeDescribe},
+		#{operateTime}
+	</sql>
+
+	<!-- 主键查询-->
+	<select id="findModlePrototype" resultMap="modlePrototypeResultMap">
+		SELECT <include refid="Field"></include> FROM <include refid="tableName"></include>
+		WHERE ID=#{id}
+	</select>
+
+	<!-- 列表查询-->
+	<select id="queryModlePrototype" resultMap="modlePrototypeResultMap">
+		SELECT <include refid="Field"></include> FROM <include refid="tableName"></include>
+	</select>
+
+	<!-- 条件查询-->
+	<select id="findModlePrototypeListPage" resultMap="modlePrototypeResultMap">
+		SELECT <include refid="Field"></include> FROM <include refid="tableName"></include>
+		WHERE 1=1
+		<if test="modlePrototypeName!=null and modlePrototypeName!=''">
+			AND MODLE_PROTOTYPE_NAME LIKE CONCAT('%', #{modlePrototypeName}, '%')
+		</if>
+	</select>
+
+	<!-- 修改-->
+	<update id="updateModlePrototype" parameterType="ModlePrototype">
+		UPDATE <include refid="tableName"></include>
+		SET MODLE_PROTOTYPE_NAME=#{modlePrototypeName},MODLE_PROTOTYPE_DESCRIBE=#{modlePrototypeDescribe},OPERATE_TIME=#{operateTime}
+		WHERE ID=#{id}
+	</update>
+
+	<!-- 新增-->
+	<insert id="saveModlePrototype" useGeneratedKeys="true" keyProperty="id">
+		insert into <include refid="tableName"></include>(
+			<include refid="Field"></include>
+		) values (
+			<include refid="FieldValue"></include>
+		)
+	</insert>
+
+</mapper>

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ectrip.dao.ProjectInfoDAO">
+
+    <resultMap type="ProjectInfo" id="projectInfoResultMap">
+        <id column="ID" property="id"/>
+        <result column="PROJECT_ID" property="projectId"/>
+        <result column="SERVER_IP" property="serverIp"/>
+        <result column="DB_SERVER_IP" property="dbServerIp"/>
+        <result column="DB_USER" property="dbUser"/>
+        <result column="DB_PWD" property="dbPwd"/>
+        <result column="DB_PORT" property="dbPort"/>
+        <result column="HOST_NAME" property="hostName"/>
+        <result column="SSH" property="ssh"/>
+    </resultMap>
+
+    <resultMap type="ProjectInfoVO" id="projectInfoVOResultMap">
+        <id column="ID" property="id"/>
+        <result column="PROJECT_ID" property="projectId"/>
+        <result column="PROJECT_NAME" property="projectName"/>
+        <result column="SERVER_IP" property="serverIp"/>
+        <result column="DB_SERVER_IP" property="dbServerIp"/>
+        <result column="DB_USER" property="dbUser"/>
+        <result column="DB_PWD" property="dbPwd"/>
+        <result column="DB_PORT" property="dbPort"/>
+        <result column="HOST_NAME" property="hostName"/>
+        <result column="SSH" property="ssh"/>
+    </resultMap>
+
+    <!--表名 -->
+    <sql id="tableName">
+		PROJECT_INFO
+	</sql>
+
+    <!-- 字段 -->
+    <sql id="Field">
+		ID,
+		PROJECT_ID,
+		SERVER_IP,
+		DB_SERVER_IP,
+		DB_USER,
+		DB_PWD,
+		DB_PORT,
+		HOST_NAME,
+		SSH
+	</sql>
+
+    <!-- 字段值 -->
+    <sql id="FieldValue">
+		#{id},
+		#{projectId},
+		#{serverIp},
+		#{dbServerIp},
+		#{dbUser},
+		#{dbPwd},
+		#{dbPort},
+		#{hostName},
+		#{ssh}
+	</sql>
+
+    <!-- 主键查询-->
+    <select id="findProjectInfo" resultMap="projectInfoResultMap">
+        SELECT <include refid="Field"></include> FROM
+        <include refid="tableName"></include>
+        WHERE ID=#{id}
+    </select>
+
+    <select id="findProjectInfoByProjectId" resultMap="projectInfoResultMap">
+        SELECT <include refid="Field"></include> FROM
+        <include refid="tableName"></include>
+        WHERE PROJECT_ID=#{projectId}
+    </select>
+
+    <!-- 条件查询-->
+    <select id="findProjectInfoListPage" resultMap="projectInfoVOResultMap">
+        SELECT
+        PI.ID,
+        P.PROJECT_NAME,
+        PI.PROJECT_ID,
+        PI.SERVER_IP,
+        PI.DB_SERVER_IP,
+        PI.DB_USER,
+        PI.DB_PWD,
+        PI.DB_PORT,
+        PI.HOST_NAME,
+        PI.SSH
+        FROM PROJECT P,PROJECT_INFO PI
+        where PI.PROJECT_ID = P.ID
+        <if test="projectName!=null and projectName!=''">
+            AND PROJECT_NAME LIKE CONCAT('%', #{projectName}, '%')
+        </if>
+    </select>
+
+    <!-- 修改-->
+    <update id="updateProjectInfo" parameterType="ProjectInfo">
+        UPDATE
+        <include refid="tableName"></include>
+        SET
+        SERVER_IP=#{serverIp},DB_SERVER_IP=#{dbServerIp},DB_USER=#{dbUser},DB_PWD=#{dbPwd},DB_PORT=#{dbPort},HOST_NAME=#{hostName},SSH=#{ssh}
+        WHERE ID=#{id}
+    </update>
+
+    <!-- 新增-->
+    <insert id="saveProjectInfo" useGeneratedKeys="true" keyProperty="id">
+        insert into <include refid="tableName"></include>(
+        <include refid="Field"></include>
+        ) values (
+        <include refid="FieldValue"></include>
+        )
+    </insert>
+
+</mapper>

@@ -1,0 +1,22 @@
+[
+	{
+		"title": "项目管理",
+		"icon": "fa-cubes",
+		"spread": true,
+		"children": [
+			{
+				"title": "项目列表",
+				"icon": "&#xe641;",
+				"href": "/project/projectList.html"
+			}, {
+				"title": "项目配置信息列表",
+				"icon": "&#xe63c;",
+				"href": "form.html"
+			}, {
+				"title": "模块原型列表",
+				"icon": "&#xe63c;",
+				"href": "form.html"
+			}
+		]
+	}
+]

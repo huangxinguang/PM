@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ectrip.dao.ModleDAO">
+
+	<resultMap type="Modle" id="modleResultMap">
+		<id column="ID" property="id"/>
+		<result column="PROJECT_ID" property="projectId"/>
+		<result column="MODLE_NAME" property="modleName"/>
+		<result column="MODLE_DESCRIBE" property="modleDescribe"/>
+		<result column="MODLE_STATE" property="modleState"/>
+	</resultMap>
+
+	<!--表名 -->
+	<sql id="tableName">
+		MODLE
+	</sql>
+
+	<!-- 字段 -->
+	<sql id="Field">
+		ID,
+		PROJECT_ID,
+		MODLE_NAME,
+		MODLE_DESCRIBE,
+		MODLE_STATE
+	</sql>
+
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{id},
+		#{projectId},
+		#{modleName},
+		#{modleDescribe},
+		#{modleState}
+	</sql>
+
+	<!-- 主键查询-->
+	<select id="findModle" resultMap="modleResultMap">
+		SELECT <include refid="Field"></include> FROM <include refid="tableName"></include>
+		WHERE ID={id}
+	</select>
+
+	<!-- 条件查询-->
+	<select id="queryModleList" resultMap="modleResultMap">
+		SELECT ID,PROJECT_ID,MODLE_NAME,MODLE_DESCRIBE,
+		(CASE WHEN MODLE_STATE='0' THEN '开发中'
+		ELSE '已完成'
+		END) as MODLE_STATE
+		FROM <include refid="tableName"></include>
+		WHERE PROJECT_ID=#{projectId}
+	</select>
+
+	<!-- 条件查询-->
+	<select id="queryModle" resultMap="modleResultMap">
+		SELECT ID,PROJECT_ID,MODLE_NAME,MODLE_DESCRIBE,
+		(CASE WHEN MODLE_STATE='0' THEN '开发中'
+		ELSE '已完成'
+		END) as MODLE_STATE
+		FROM <include refid="tableName"></include>
+		WHERE PROJECT_ID=#{projectId}
+		<if test="modleName!=null and modleName!=''">
+			AND MODLE_NAME LIKE CONCAT('%', #{modleName}, '%')
+		</if>
+		<if test="modleState!=null and modleState!=''">
+			AND MODLE_STATE=#{modleState}
+		</if>
+	</select>
+
+	<!-- 修改-->
+	<update id="updateModle" parameterType="Modle">
+		UPDATE <include refid="tableName"></include>
+		SET PROJECT_ID=#{projectId},MODLE_NAME=#{modleName},MODLE_DESCRIBE=#{modleDescribe},MODLE_STATE=#{modleState}
+		WHERE ID=#{id}
+	</update>
+
+	<!-- 新增-->
+	<insert id="saveModle" useGeneratedKeys="true" keyProperty="id">
+		insert into <include refid="tableName"></include>(
+			<include refid="Field"></include>
+		) values (
+			<include refid="FieldValue"></include>
+		)
+	</insert>
+
+</mapper>

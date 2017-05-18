@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<meta charset="UTF-8"/>
+		<title>项目列表</title>
+		<link rel="stylesheet" type="text/css" media="all" th:href="@{/plugins/layui/css/layui.css}" />
+		<link rel="stylesheet" type="text/css" media="all" th:href="@{/css/global.css}" />
+		<link rel="stylesheet" type="text/css" media="all" th:href="@{http://www.jq22.com/jquery/font-awesome.4.6.0.css}" />
+		<script type="text/javascript" th:src="@{/plugins/layui/layui.js}"></script>
+		<script type="text/javascript" th:src="@{/jquery/jquery-3.2.1.min.js}"></script>
+	</head>
+
+	<body>
+		<div>
+
+			<blockquote class="layui-elem-quote">
+				<form id="searchForm" name="searchForm" class="layui-form" action="/project/projectList.html">
+					<input type="hidden" id="pageNo" name="pageNo" th:value="${pageInfo.pageNum}"/>
+					<div class="layui-form-item">
+						<label class="layui-form-label">项目名称:</label>
+						<div class="layui-input-inline">
+							<input type="text" name="projectName" th:value="${projectName}"  placeholder="请输入项目名称" autocomplete="off" class="layui-input"/>
+						</div>
+
+						<label class="layui-form-label">负责人:</label>
+						<div class="layui-input-inline">
+							<input type="text" name="projectLeader" th:value="${projectLeader}"  placeholder="请输入负责人" autocomplete="off" class="layui-input"/>
+						</div>
+
+						<label class="layui-form-label">状态:</label>
+						<div class="layui-input-inline">
+							<select name="projectStatus" th:value="${projectStatus}">
+								<option selected="" value="" >所有</option>
+								<option value="0">开发中</option>
+								<option value="1">升级中</option>
+								<option value="2">已完成</option>
+							</select>
+						</div>
+					</div>
+
+					<div class="layui-form-item">
+						<a href="@{/project/projectAdd.html}" class="layui-btn layui-btn-small">
+							<i class="layui-icon">&#xe608;</i>新增
+						</a>
+						<button class="layui-btn layui-btn-small"><i class="layui-icon">&#xe615;</i>搜索</button>
+					</div>
+				</form>
+			</blockquote>
+
+			<fieldset class="layui-elem-field">
+				<div class="layui-field-box layui-form">
+					<table class="layui-table ">
+						<colgroup>
+							<col width="50"/>
+							<col width="150"/>
+							<col width="150"/>
+							<col width="150"/>
+							<col width="150"/>
+							<col width="150"/>
+							<col width="150"/>
+							<col width="150"/>
+							<col width="200"/>
+						</colgroup>
+
+						<thead>
+							<tr>
+								<th>
+									<input type="checkbox" name="id" lay-filter="allselector" lay-skin="primary"/></th>
+								<th>名称</th>
+								<th>负责人</th>
+								<th>负责人电话</th>
+								<th>负责人QQ</th>
+								<th>负责人邮箱</th>
+								<th>操作时间</th>
+								<th>状态</th>
+								<th>操作</th>
+							</tr>
+						</thead>
+						<tbody id="content">
+							<tr th:each="item : ${pageInfo.list}">
+								<td><input name="id" type="checkbox" lay-skin="primary"/></td>
+								<td th:text="${item.projectName}"></td>
+								<td th:text="${item.projectLeader}"></td>
+								<td th:text="${item.phone}"></td>
+								<td th:text="${item.qq}"></td>
+								<td th:text="${item.email}"></td>
+								<td th:text="${item.operateTime}"></td>
+								<td th:text="${item.projectStatus}"></td>
+								<td>
+									<a href="/detail-1" target="_blank" class="layui-btn layui-btn-normal layui-btn-mini">预览</a>
+									<a href="javascript:;" data-name="{{ item.name }}" data-opt="edit" class="layui-btn layui-btn-mini">编辑</a>
+									<a href="javascript:;" data-id="1" data-opt="del" class="layui-btn layui-btn-danger layui-btn-mini">删除</a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</fieldset>
+			<div >
+				<div id="paged"></div>
+			</div>
+		</div>
+	</body>
+	<script th:inline="javascript">
+        layui.use(['laypage', 'layer'], function() {
+            var laypage = layui.laypage;
+            var layer = layui.layer;
+            //var pages = [[${pageInfo.pages}]];
+			pages=10;
+            laypage({
+                cont: 'paged',
+                first: 1,
+				curr: [[${pageInfo.pageNum}]],
+				last: pages,
+                prev: '上一页',
+                next: '下一页',
+				pages: pages, //总页数
+                groups: 5,//连续显示分页数
+                jump: function(obj, first){
+                    //得到了当前页，用于向服务端请求对应数据
+                    var curr = obj.curr;
+                    $("#pageNo").val(curr);
+                    if(!first) {
+                        $("#searchForm").submit();
+					}
+                }
+            });
+        });
+
+        layui.use('form', function(){
+            var form = layui.form();
+            var layer = layui.layer;
+			//监听提交
+            form.on('submit(searchForm)', function(data){
+                layer.msg(JSON.stringify(data.field));
+                return false;
+            });
+        });
+
+       </script>
+</html>

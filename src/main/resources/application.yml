@@ -1,0 +1,25 @@
+server:
+  port: 8081
+  context-path: /
+
+spring:
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
+    encoding: UTF-8
+    content-type: text/html
+  datasource:
+    name: test
+    #url: jdbc:mysql://192.168.1.132:3306/test
+    url: jdbc:mysql://192.168.1.206:3306/system_item_manager
+    username: root
+    password: root
+    # 使用druid数据源
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+
+mybatis:
+  mapperLocations: classpath:mapper/*.xml
+  typeAliasesPackage: com.ectrip.model,com.ectrip.vo
+

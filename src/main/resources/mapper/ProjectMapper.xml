@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ectrip.dao.ProjectDao">
+
+    <resultMap type="Project" id="baseResultMap">
+        <id column="ID" property="id"/>
+        <result column="PROJECT_NAME" property="projectName"/>
+        <result column="PROJECT_LEADER" property="projectLeader"/>
+        <result column="PHONE" property="phone"/>
+        <result column="QQ" property="qq"/>
+        <result column="EMAIL" property="email"/>
+        <result column="OPERATE_TIME" property="operateTime"/>
+        <result column="PROJECT_STATUS" property="projectStatus"/>
+    </resultMap>
+
+    <!--表名 -->
+    <sql id="tableName">
+		PROJECT
+	</sql>
+
+    <!-- 字段 -->
+    <sql id="Field">
+		ID,
+		PROJECT_NAME,
+		PROJECT_LEADER,
+		PHONE,
+		QQ,
+		EMAIL,
+		OPERATE_TIME,
+		PROJECT_STATUS
+	</sql>
+
+    <!-- 字段值 -->
+    <sql id="FieldValue">
+		#{id},
+		#{projectName},
+		#{projectLeader},
+		#{phone},
+		#{qq},
+		#{email},
+		#{operateTime},
+		#{projectStatus}
+	</sql>
+
+    <select id="findProject" resultMap="baseResultMap">
+        SELECT <include refid="Field"></include> FROM <include refid="tableName"></include>
+        WHERE ID = #{projectId}
+    </select>
+
+    <!-- 新增-->
+    <insert id="save" useGeneratedKeys="true" keyProperty="id">
+        insert into <include refid="tableName"></include>(
+        <include refid="Field"></include>
+        ) values (
+        <include refid="FieldValue"></include>
+        )
+    </insert>
+
+    <update id="updateProject">
+        update <include refid="tableName"></include>
+        set PROJECT_NAME = #{projectName},
+        PROJECT_LEADER = #{projectLeader},
+        PHONE = #{phone},
+        QQ = #{qq},
+        EMAIL = #{email},
+        OPERATE_TIME = #{operateTime},
+        PROJECT_STATUS = #{projectStatus}
+        where ID = #{id}
+    </update>
+
+    <select id="findProjectListPage" resultMap="baseResultMap">
+        SELECT
+        ID,
+        PROJECT_NAME,
+        PROJECT_LEADER,
+        PHONE,
+        QQ,
+        EMAIL,
+        OPERATE_TIME,
+        (CASE WHEN PROJECT_STATUS='0' THEN '开发中'
+        WHEN PROJECT_STATUS='1' THEN '升级中'
+        ELSE '已完成'
+        END) as PROJECT_STATUS
+        FROM PROJECT
+        WHERE 1=1
+        <if test="projectStatus!=null and projectStatus!=''">
+            AND PROJECT_STATUS = #{projectStatus}
+        </if>
+        <if test="projectName!=null and projectName!=''">
+            AND PROJECT_NAME LIKE CONCAT('%', #{projectName}, '%')
+        </if>
+        <if test="projectLeader!=null and projectLeader!=''">
+            AND PROJECT_LEADER LIKE CONCAT('%', #{projectLeader}, '%')
+        </if>
+        ORDER BY ID,OPERATE_TIME
+    </select>
+</mapper>
