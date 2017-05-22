@@ -52,6 +52,11 @@ public class ProjectModleController extends BaseController {
         return mav;
     }
 
+    /**
+     * 添加项目模块
+     * @param projectId
+     * @return
+     */
     @RequestMapping(value = "/addModle.html",method = RequestMethod.GET)
     public ModelAndView addModle(Integer projectId){
         ModelAndView mav = getModelAndView();
@@ -88,6 +93,11 @@ public class ProjectModleController extends BaseController {
         return mav;
     }
 
+    /**
+     * 删除项目模块
+     * @param modleId
+     * @return
+     */
     @RequestMapping(value = "/delModle.do",method = RequestMethod.GET)
     public String delModle(Integer modleId) {
         modleService.delModle(modleId);

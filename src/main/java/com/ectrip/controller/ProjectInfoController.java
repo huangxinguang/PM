@@ -52,6 +52,10 @@ public class ProjectInfoController extends BaseController {
         return mav;
     }
 
+    /**
+     * 添加项目配置信息
+     * @return
+     */
     @RequestMapping(value = "/addProjectInfo.html",method = RequestMethod.GET)
     public ModelAndView addProjectInfo(){
         ModelAndView mav = getModelAndView();
@@ -61,12 +65,22 @@ public class ProjectInfoController extends BaseController {
         return mav;
     }
 
+    /**
+     * 保存项目配置信息
+     * @param projectInfo
+     * @return
+     */
     @RequestMapping(value = "/saveProjectInfo.do",method = RequestMethod.POST)
     public String addProjectInfo(@ModelAttribute("projectInfo") ProjectInfo projectInfo){
         projectInfoService.saveProjectInfo(projectInfo);
         return "redirect:projectInfoList.html";
     }
 
+    /**
+     * 编辑项目配置信息
+     * @param projectInfoId
+     * @return
+     */
     @RequestMapping(value = "/editProjectInfo.html",method = RequestMethod.GET)
     public ModelAndView editProjectInfo(Integer projectInfoId){
         ModelAndView mav = getModelAndView();
@@ -76,6 +90,11 @@ public class ProjectInfoController extends BaseController {
         return mav;
     }
 
+    /**
+     * 删除项目配置信息
+     * @param projectInfoId
+     * @return
+     */
     @RequestMapping(value = "/delProjectInfo.do",method = RequestMethod.GET)
     public String delModlePro(Integer projectInfoId) {
         projectInfoService.delProjectInfo(projectInfoId);
