@@ -8,6 +8,7 @@ import com.ectrip.model.Project;
 import com.ectrip.model.ProjectInfo;
 import com.ectrip.service.ModlePrototypeService;
 import com.ectrip.service.ProjectService;
+import com.ectrip.utils.DateUtil;
 import com.ectrip.vo.ProjectInfoVO;
 import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
@@ -20,7 +21,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by 23626 on 2017/5/11.
+ * Created by huangxinguang on 2017/5/11.
  */
 @Service
 public class ModlePrototypeServiceImpl implements ModlePrototypeService {
@@ -28,39 +29,35 @@ public class ModlePrototypeServiceImpl implements ModlePrototypeService {
     @Autowired
     ModlePrototypeDAO modlePrototypeDAO;
 
-    private Logger logger = LoggerFactory.getLogger(ModlePrototypeServiceImpl.class);
-
     @Override
     public PageInfo<ModlePrototype> findModlePrototypeListPage(Integer pageNo, Integer pageSize, String modlePrototypeName) {
         List<ModlePrototype> list = modlePrototypeDAO.findModlePrototypeListPage(pageNo, pageSize, modlePrototypeName);
-        logger.info("查询数据:{}", list.toString());
         return new PageInfo<>(list);
     }
 
-    @Override
-    public List<ModlePrototype> queryModlePrototype() {
-        List<ModlePrototype> list = modlePrototypeDAO.queryModlePrototype();
-        logger.info("查询数据:{}", list.toString());
-        return list;
-    }
 
     @Override
-    public void saveModlePrototype(Integer id, String modlePrototypeName, String modlePrototypeDescribe) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        ModlePrototype modlePrototype = new ModlePrototype();
-        modlePrototype.setModlePrototypeName(modlePrototypeName);
-        modlePrototype.setModlePrototypeDescribe(modlePrototypeDescribe);
-        modlePrototype.setOperateTime(sdf.format(new Date()));
-        if(id == null){
+    public void saveModlePrototype(ModlePrototype modlePrototype) {
+        modlePrototype.setOperateTime(DateUtil.getDateTime(new Date()));
+        if(modlePrototype.getId() == null){
             modlePrototypeDAO.saveModlePrototype(modlePrototype);
         }else{
-            modlePrototype.setId(id);
             modlePrototypeDAO.updateModlePrototype(modlePrototype);
         }
     }
 
     @Override
-    public ModlePrototype findModlePrototype(Integer id) {
+    public void delModlePrototype(Integer modelProId) {
+        modlePrototypeDAO.delModlePrototype(modelProId);
+    }
+
+    public ModlePrototype findModlePrototypeById(Integer id) {
         return modlePrototypeDAO.findModlePrototype(id);
     }
+
+    @Override
+    public List<ModlePrototype> findAllModlePrototypeList() {
+        return modlePrototypeDAO.findAllModlePrototypeList();
+    }
+
 }

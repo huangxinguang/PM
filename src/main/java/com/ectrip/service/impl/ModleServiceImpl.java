@@ -20,7 +20,6 @@ import java.util.List;
  */
 @Service
 public class ModleServiceImpl implements ModleService {
-    private Logger logger = LoggerFactory.getLogger(ModleServiceImpl.class);
 
     @Autowired
     private ModleDAO modleDAO;
@@ -30,27 +29,36 @@ public class ModleServiceImpl implements ModleService {
 
     /**
      * 新增项目模块
-     * @param projectId
-     * @param modlePrototypeId
-     * @return int
      */
-    public int saveModle(Integer projectId,Integer modlePrototypeId){
-        ModlePrototype modlePrototype = modlePrototypeDAO.findModlePrototype(modlePrototypeId);
-        Modle modle = new Modle();
-        modle.setModleName(modlePrototype.getModlePrototypeName());
-        modle.setProjectId(projectId);
-        modle.setModleDescribe(modlePrototype.getModlePrototypeDescribe());
-        modle.setModleState("0");
-        return modleDAO.saveModle(modle);
+    public void saveModle(Modle modle){
+        if(modle.getId() != null) {
+            modleDAO.updateModle(modle);
+        }else {
+            modleDAO.saveModle(modle);
+        }
+    }
+
+    @Override
+    public Modle queryModleById(Integer modleId) {
+        return modleDAO.queryModleById(modleId);
+    }
+
+    @Override
+    public List<Modle> queryModleList(List<Integer> modleIdList) {
+        return modleDAO.queryModleListByIds(modleIdList);
     }
 
     /**
      * 修改项目模块
      * @param modle
-     * @return int
      */
-    public int updateModle(Modle modle){
-        return modleDAO.updateModle(modle);
+    public void updateModle(Modle modle){
+        modleDAO.updateModle(modle);
+    }
+
+    @Override
+    public void delModle(Integer id) {
+        modleDAO.delModle(id);
     }
 
     /**
@@ -64,32 +72,16 @@ public class ModleServiceImpl implements ModleService {
      */
     public PageInfo<Modle> queryModleList(Integer pageNo, Integer pageSize, Integer projectId, String modleName, String modleState){
         List<Modle> list = modleDAO.queryModle(pageNo,pageSize,projectId,modleName,modleState);
-        logger.info("查询数据:{}",list.toString());
         return new PageInfo<>(list);
     }
 
     /**
-     * 获取未选中的模块原型列表
+     * 获取项目模块列表
      * @param projectId
      * @return list
      */
-    public List<ModlePrototype> findModlePrototypeList(Integer projectId){
-
-        List<Modle> modleList = modleDAO.queryModleList(projectId);
-
-        List<ModlePrototype> modlePrototypeList = modlePrototypeDAO.queryModlePrototype();
-        Iterator<ModlePrototype> modlePrototypeIterator = modlePrototypeList.iterator();
-
-        while (modlePrototypeIterator.hasNext()){
-            ModlePrototype modlePrototype = modlePrototypeIterator.next();
-            for (Modle modle:modleList) {
-                if (modle.getModleName().equals(modlePrototype.getModlePrototypeName())){
-                    modlePrototypeIterator.remove();
-                }
-            }
-        }
-
-        return modlePrototypeList;
+    public List<Modle> findProjectModleList(Integer projectId){
+        return modleDAO.queryModleList(projectId);
     }
 
 }

@@ -13,18 +13,27 @@ public interface ModleService {
 
     /**
      * 新增项目模块
-     * @param projectId
-     * @param modlePrototypeId
      * @return int
      */
-    int saveModle(Integer projectId, Integer modlePrototypeId);
+    void saveModle(Modle modle);
+
+    /**
+     * 查询模块
+     * @param modleId
+     * @return
+     */
+    Modle queryModleById(Integer modleId);
+
+    List<Modle> queryModleList(List<Integer> modleIdList);
 
     /**
      * 修改项目模块
      * @param modle
      * @return int
      */
-    int updateModle(Modle modle);
+    void updateModle(Modle modle);
+
+    void delModle(Integer id);
 
     /**
      * 项目模块分页条件查询
@@ -35,13 +44,14 @@ public interface ModleService {
      * @param modleState
      * @return pageInfo
      */
-    public PageInfo<Modle> queryModleList(Integer pageNo, Integer pageSize, Integer projectId, String modleName, String modleState);
+    PageInfo<Modle> queryModleList(Integer pageNo, Integer pageSize, Integer projectId, String modleName, String modleState);
 
     /**
-     * 获取未选中的模块原型列表
+     * 获取项目模块列表
      * @param projectId
      * @return list
      */
-    public List<ModlePrototype> findModlePrototypeList(Integer projectId);
+    List<Modle> findProjectModleList(Integer projectId);
+
 
 }

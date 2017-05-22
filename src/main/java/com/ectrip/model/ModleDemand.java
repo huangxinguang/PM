@@ -36,10 +36,4 @@ public class ModleDemand {
 
     public ModleDemand() {
     }
-
-    public ModleDemand(Integer id, Integer modleId, Integer demandId) {
-        this.id = id;
-        this.modleId = modleId;
-        this.demandId = demandId;
-    }
 }

@@ -45,7 +45,7 @@
 	<!-- 主键查询-->
 	<select id="findVersion" resultMap="versionResultMap">
 		SELECT <include refid="Field"></include> FROM <include refid="tableName"></include>
-		WHERE ID={id}
+		WHERE ID=#{id}
 	</select>
 
 	<!-- 条件查询-->
@@ -53,13 +53,13 @@
 		SELECT <include refid="Field"></include> FROM <include refid="tableName"></include>
 		WHERE 1=1
 		<if test="projectId!=null and projectId!=''">
-			AND PROJECT_ID={projectId}
+			AND PROJECT_ID=#{projectId}
 		</if>
 		<if test="modleId!=null and modleId!=''">
-			AND MODLE_ID={modleId}
+			AND MODLE_ID=#{modleId}
 		</if>
 		<if test="version!=null and version!=''">
-			AND VERSION={version}
+			AND VERSION=#{version}
 		</if>
 	</select>
 
@@ -77,6 +77,26 @@
 		) values (
 			<include refid="FieldValue"></include>
 		)
+	</insert>
+
+	<insert id="batchSave" parameterType="java.util.List">
+		insert into <include refid="tableName"></include>(
+		<include refid="Field"></include>
+		)
+		values
+
+		<foreach collection ="versionList" item="version" index= "index" separator =",">
+			(
+			#{version.id},
+			#{version.version},
+			#{version.modleId},
+			#{version.upUserId},
+			#{version.upTime},
+			#{version.versionId},
+			#{version.demandId},
+			#{version.versionState}
+			)
+		</foreach >
 	</insert>
 
 </mapper>

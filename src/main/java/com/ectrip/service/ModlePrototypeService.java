@@ -11,12 +11,38 @@ import java.util.List;
  * Desc:
  */
 public interface ModlePrototypeService {
-
+    /**
+     * 查询列表
+     * @param pageNo
+     * @param pageSize
+     * @param modlePrototypeName
+     * @return
+     */
     PageInfo<ModlePrototype> findModlePrototypeListPage(Integer pageNo, Integer pageSize, String modlePrototypeName);
 
-    List<ModlePrototype> queryModlePrototype();
+    /**
+     * 保存模型
+     * @param modlePrototype
+     */
+    void saveModlePrototype(ModlePrototype modlePrototype);
 
-    void saveModlePrototype(Integer id, String modlePrototypeName, String modlePrototypeDescribe);
+    /**
+     * 删除模块
+     * @param modelProId
+     */
+    void delModlePrototype(Integer modelProId);
 
-    ModlePrototype findModlePrototype(Integer id);
+    /**
+     * 查询通过id
+     * @param id
+     * @return
+     */
+    ModlePrototype findModlePrototypeById(Integer id);
+
+    /**
+     * 获取所有模块原型
+     * @return
+     */
+    List<ModlePrototype> findAllModlePrototypeList();
+
 }

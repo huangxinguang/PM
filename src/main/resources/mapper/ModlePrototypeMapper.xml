@@ -36,6 +36,20 @@
 		WHERE ID=#{id}
 	</select>
 
+	<!-- 查询所有-->
+	<select id="findAllModlePrototypeList" resultMap="modlePrototypeResultMap">
+		SELECT <include refid="Field"></include> FROM <include refid="tableName"></include>
+	</select>
+
+	<!-- 通过id集合查询-->
+	<select id="findModlePrototypeList" resultMap="modlePrototypeResultMap" parameterType="java.util.List">
+		SELECT <include refid="Field"></include> FROM <include refid="tableName"></include>
+		WHERE ID IN
+		<foreach item="item" index="index" collection="mids" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</select>
+
 	<!-- 列表查询-->
 	<select id="queryModlePrototype" resultMap="modlePrototypeResultMap">
 		SELECT <include refid="Field"></include> FROM <include refid="tableName"></include>
@@ -56,6 +70,12 @@
 		SET MODLE_PROTOTYPE_NAME=#{modlePrototypeName},MODLE_PROTOTYPE_DESCRIBE=#{modlePrototypeDescribe},OPERATE_TIME=#{operateTime}
 		WHERE ID=#{id}
 	</update>
+
+	<!-- 删除-->
+	<delete id="delModlePrototype">
+		DELETE FROM <include refid="tableName"></include>
+		WHERE ID=#{id}
+	</delete>
 
 	<!-- 新增-->
 	<insert id="saveModlePrototype" useGeneratedKeys="true" keyProperty="id">

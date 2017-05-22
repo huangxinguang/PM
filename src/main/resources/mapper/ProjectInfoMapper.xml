@@ -86,6 +86,9 @@
         PI.SSH
         FROM PROJECT P,PROJECT_INFO PI
         where PI.PROJECT_ID = P.ID
+        <if test="projectId!=null and projectId!=''">
+            AND P.ID=#{projectId}
+        </if>
         <if test="projectName!=null and projectName!=''">
             AND PROJECT_NAME LIKE CONCAT('%', #{projectName}, '%')
         </if>
@@ -99,6 +102,12 @@
         SERVER_IP=#{serverIp},DB_SERVER_IP=#{dbServerIp},DB_USER=#{dbUser},DB_PWD=#{dbPwd},DB_PORT=#{dbPort},HOST_NAME=#{hostName},SSH=#{ssh}
         WHERE ID=#{id}
     </update>
+
+    <!-- 删除-->
+    <delete id="delProjectInfo">
+        DELETE FROM <include refid="tableName"></include>
+        WHERE ID=#{id}
+    </delete>
 
     <!-- 新增-->
     <insert id="saveProjectInfo" useGeneratedKeys="true" keyProperty="id">

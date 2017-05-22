@@ -13,7 +13,7 @@ public class Version {
     private String upTime;//升级时间
     private Integer versionId;//升级前的版本ID
     private Integer demandId;//升级对应的需求ID
-    private Integer versionState;//版本状态，0：升级中，1：已完成
+    private Integer versionState;//版本状态，0：停用，1：启用
 
     public Integer getId() {
         return id;
@@ -80,16 +80,5 @@ public class Version {
     }
 
     public Version() {
-    }
-
-    public Version(Integer id, String version, Integer modleId, String upUserId, String upTime, Integer versionId, Integer demandId, Integer versionState) {
-        this.id = id;
-        this.version = version;
-        this.modleId = modleId;
-        this.upUserId = upUserId;
-        this.upTime = upTime;
-        this.versionId = versionId;
-        this.demandId = demandId;
-        this.versionState = versionState;
     }
 }

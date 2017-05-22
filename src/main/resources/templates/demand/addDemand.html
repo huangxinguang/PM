@@ -1,0 +1,109 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8"/>
+    <title>发起需求</title>
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/plugins/layui/css/layui.css}" />
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/global.css}" />
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{http://www.jq22.com/jquery/font-awesome.4.6.0.css}" />
+    <script type="text/javascript" th:src="@{/plugins/layui/layui.js}"></script>
+    <script type="text/javascript" th:src="@{/jquery/jquery-3.2.1.min.js}"></script>
+</head>
+
+<body>
+    <div>
+        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+            <legend>发起需求</legend>
+        </fieldset>
+
+
+        <form class="layui-form" action="/demand/addDemand.do" method="post">
+            <input type="hidden" name="projectId" th:value="${projectId}"/>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">选择模块</label>
+                <div class="layui-input-block" th:each="item : ${modleList}">
+                    <input type="checkbox" name="mids" th:title="${item.modleName}" th:value="${item.id}" />
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">需求名称</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="demandName"  lay-verify="required" autocomplete="off" class="layui-input"/>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">版本号</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="version"  lay-verify="required" autocomplete="off" class="layui-input"/>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">提出人</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="putUserId" lay-verify="required"  autocomplete="off" class="layui-input"/>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">预期完成时间</label>
+                <div class="layui-input-inline">
+                    <input class="layui-input" name="exceptEndTime"  onclick="layui.laydate({elem: this, festival: true})"/>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">需求描述</label>
+                <div class="layui-input-block">
+                    <textarea name= "demandDescribe"  class="layui-textarea"></textarea>
+                </div>
+            </div>
+
+
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" >立即提交</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
+
+<script>
+    //Demo
+    layui.use('form', function(){
+        var form = layui.form();
+
+        //监听提交
+        form.on('submit(formDemo)', function(data){
+            layer.msg(JSON.stringify(data.field));
+            return false;
+        });
+    });
+
+    layui.use('laydate', function(){
+        var laydate = layui.laydate;
+
+        var start = {
+            min: laydate.now()
+            ,max: '2099-06-16 23:59:59'
+            ,istoday: false
+            ,choose: function(datas){
+                end.min = datas; //开始日选好后，重置结束日的最小日期
+                end.start = datas //将结束日的初始值设定为开始日
+            }
+        };
+
+        var end = {
+            min: laydate.now()
+            ,max: '2099-06-16 23:59:59'
+            ,istoday: false
+            ,choose: function(datas){
+                start.max = datas; //结束日选好后，重置开始日的最大日期
+            }
+        };
+
+    });
+</script>

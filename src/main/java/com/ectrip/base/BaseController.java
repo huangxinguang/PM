@@ -18,6 +18,8 @@ public abstract class BaseController {
 
     private final static Logger _log = LoggerFactory.getLogger(BaseController.class);
 
+    protected int pageSize = 10;
+
     public ModelAndView getModelAndView() {
         return new ModelAndView();
     }

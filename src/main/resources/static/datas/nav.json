@@ -1,21 +1,29 @@
 [
 	{
-		"title": "项目管理",
+		"title": "系统管理",
 		"icon": "fa-cubes",
 		"spread": true,
 		"children": [
 			{
-				"title": "项目列表",
+				"title": "项目管理",
 				"icon": "&#xe641;",
 				"href": "/project/projectList.html"
 			}, {
-				"title": "项目配置信息列表",
+				"title": "项目模块管理",
 				"icon": "&#xe63c;",
-				"href": "form.html"
+				"href": "/modle/modleList.html"
 			}, {
-				"title": "模块原型列表",
+				"title": "项目信息配置管理",
 				"icon": "&#xe63c;",
-				"href": "form.html"
+				"href": "/projectInfo/projectInfoList.html"
+			}, {
+				"title": "公共模块管理",
+				"icon": "&#xe63c;",
+				"href": "/modlePro/modleProList.html"
+			}, {
+				"title": "需求管理",
+				"icon": "&#xe63c;",
+				"href": "/demand/demandList.html"
 			}
 		]
 	}

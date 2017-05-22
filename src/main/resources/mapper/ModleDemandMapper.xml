@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ectrip.dao.ModleDemandDAO">
+
+	<resultMap type="ModleDemand" id="modleDemandResultMap">
+		<id column="ID" property="id"/>
+		<result column="MODLE_ID" property="modleId"/>
+		<result column="DEMAND_ID" property="demandId"/>
+	</resultMap>
+
+	<!--表名 -->
+	<sql id="tableName">
+		MODLE_DEMAND
+	</sql>
+
+	<!-- 字段 -->
+	<sql id="Field">
+		ID,
+		MODLE_ID,
+		DEMAND_ID
+	</sql>
+
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{id},
+		#{modleId},
+		#{demandId}
+	</sql>
+
+	<!-- 主键查询-->
+	<select id="findModle" resultMap="modleDemandResultMap">
+		SELECT <include refid="Field"></include> FROM <include refid="tableName"></include>
+		WHERE ID=#{id}
+	</select>
+
+
+	<!-- 条件查询-->
+	<select id="findModleDemandList" resultMap="modleDemandResultMap">
+		SELECT ID,MODLE_ID
+		FROM <include refid="tableName"></include>
+		WHERE DEMAND_ID=#{demandId}
+	</select>
+
+
+	<!-- 修改-->
+	<update id="updateModle" parameterType="Modle">
+		UPDATE <include refid="tableName"></include>
+		SET PROJECT_ID=#{projectId},MODLE_NAME=#{modleName},MODLE_DESCRIBE=#{modleDescribe},MODLE_STATE=#{modleState}
+		WHERE ID=#{id}
+	</update>
+
+	<!-- 新增-->
+	<insert id="saveModle" useGeneratedKeys="true" keyProperty="id">
+		insert into <include refid="tableName"></include>(
+			<include refid="Field"></include>
+		) values (
+			<include refid="FieldValue"></include>
+		)
+	</insert>
+
+	<insert id="batchSave" parameterType="java.util.List">
+		insert into <include refid="tableName"></include>(
+		<include refid="Field"></include>
+		)
+		values
+
+		<foreach collection ="modleDemandList" item="modle" index= "index" separator =",">
+			(
+			#{modle.id},
+			#{modle.modleId},
+			#{modle.demandId}
+			)
+		</foreach >
+	</insert>
+
+</mapper>

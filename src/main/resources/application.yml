@@ -12,7 +12,7 @@ spring:
   datasource:
     name: test
     #url: jdbc:mysql://192.168.1.132:3306/test
-    url: jdbc:mysql://192.168.1.206:3306/system_item_manager
+    url: jdbc:mysql://localhost:3306/pm?useUnicode=true&characterEncoding=utf8&characterSetResults=utf8
     username: root
     password: root
     # 使用druid数据源

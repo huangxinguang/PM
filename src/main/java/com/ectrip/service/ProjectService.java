@@ -1,12 +1,9 @@
 package com.ectrip.service;
 
-import com.ectrip.base.Page;
 import com.ectrip.model.Project;
-import com.ectrip.model.ProjectInfo;
-import com.ectrip.vo.ProjectInfoVO;
 import com.github.pagehelper.PageInfo;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * Created by huangxinguang on 2017/4/20 下午2:18.
@@ -14,11 +11,26 @@ import javax.servlet.http.HttpServletRequest;
  * Desc:
  */
 public interface ProjectService {
+    /**
+     * 保存
+     * @param project
+     */
+    void saveProject(Project project,List<Integer> modleIds);
 
-    void saveProject(Integer id, String projectName, String projectLeader, String phone, String QQ, String email, String projectStatus);
-    void saveProjectInfo(Integer id, Integer projectId, String serverIp, String dbServerIp, String dbUserId, String dbPwd, Integer dbPort, String hostName, String SSH);
+    void updateProject(Project project);
+
+    /**
+     * 查询
+     * @param projectId
+     * @return
+     */
     Project queryProject(Integer projectId);
-    ProjectInfo queryProjectInfo(Integer projectId);
+
+    /**
+     * 查询所有项目
+     * @return
+     */
+    List<Project> queryAllProjectList();
     /**
      * 按条件查询操作记录和环境
      *
@@ -26,7 +38,10 @@ public interface ProjectService {
      */
     PageInfo<Project> findProjectListPage(Integer pageNo,Integer pageSize, String projectStatus, String projectName, String projectLeader);
 
-    PageInfo<ProjectInfoVO> findProjectInfoListPage(Integer pageNo, Integer pageSize, String projectName);
-
+    /**
+     * 根据ID删除指定项目
+     * @param id
+     */
+    void deleteProject(Integer id);
 
 }

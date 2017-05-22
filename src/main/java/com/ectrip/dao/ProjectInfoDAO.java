@@ -11,11 +11,15 @@ import java.util.List;
  */
 public interface ProjectInfoDAO {
 
-    List<ProjectInfoVO> findProjectInfoListPage(@Param("pageNo") Integer pageNo, @Param("pageSize") Integer pageSize, @Param("projectName") String projectName);
+    List<ProjectInfoVO> findProjectInfoListPage(@Param("pageNo") Integer pageNo, @Param("pageSize") Integer pageSize, @Param("projectId") Integer projectId, @Param("projectName") String projectName);
 
     void saveProjectInfo(ProjectInfo projectInfo);
 
     void updateProjectInfo(ProjectInfo projectInfo);
+
+    void delProjectInfo(@Param("id") Integer id);
+
+    ProjectInfo findProjectInfo(@Param("id") Integer id);
 
     ProjectInfo findProjectInfoByProjectId(@Param("projectId") Integer projectId);
 }

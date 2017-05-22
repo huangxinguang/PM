@@ -1,18 +1,17 @@
-package com.ectrip.model;
+package com.ectrip.vo;
 
 /**
- * Created by Administrator on 2017/5/9 0009.
- * 需求实体类
+ * Created by huangxinguang on 2017/5/19 0019.
  */
-public class Demand {
-
+public class DemandVO {
     private Integer id;//自增主键
     private Integer projectId;//项目ID
+    private String projectName;//项目名称
     private String demandName;//需求名称
     private String demandDescribe;//需求描述
-    private String version;//申请的版本号
     private String putTime;//提出时间
     private String putUserId;//提出人
+    private String version;
     private String exceptEndTime;//预期完成时间
     private String actualEndTime;//实际完成时间
     private String completeUserId;//完成人
@@ -34,6 +33,14 @@ public class Demand {
         this.projectId = projectId;
     }
 
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
+
     public String getDemandName() {
         return demandName;
     }
@@ -48,14 +55,6 @@ public class Demand {
 
     public void setDemandDescribe(String demandDescribe) {
         this.demandDescribe = demandDescribe;
-    }
-
-    public String getVersion() {
-        return version;
-    }
-
-    public void setVersion(String version) {
-        this.version = version;
     }
 
     public String getPutTime() {
@@ -106,6 +105,14 @@ public class Demand {
         this.demandStatus = demandStatus;
     }
 
-    public Demand() {
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
+    }
+
+    public DemandVO() {
     }
 }

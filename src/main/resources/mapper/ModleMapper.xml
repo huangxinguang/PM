@@ -50,6 +50,19 @@
 	</select>
 
 	<!-- 条件查询-->
+	<select id="queryModleListByIds" resultMap="modleResultMap" parameterType="java.util.List">
+		SELECT ID,PROJECT_ID,MODLE_NAME,MODLE_DESCRIBE,
+		(CASE WHEN MODLE_STATE='0' THEN '开发中'
+		ELSE '已完成'
+		END) as MODLE_STATE
+		FROM <include refid="tableName"></include>
+		WHERE ID IN
+		<foreach item="item" index="index" collection="modleIdList" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</select>
+
+	<!-- 条件查询-->
 	<select id="queryModle" resultMap="modleResultMap">
 		SELECT ID,PROJECT_ID,MODLE_NAME,MODLE_DESCRIBE,
 		(CASE WHEN MODLE_STATE='0' THEN '开发中'
@@ -65,12 +78,28 @@
 		</if>
 	</select>
 
+	<!-- 条件查询-->
+	<select id="queryModleById" resultMap="modleResultMap">
+		SELECT ID,PROJECT_ID,MODLE_NAME,MODLE_DESCRIBE,
+		(CASE WHEN MODLE_STATE='0' THEN '开发中'
+		ELSE '已完成'
+		END) as MODLE_STATE
+		FROM <include refid="tableName"></include>
+		WHERE ID=#{id}
+	</select>
+
 	<!-- 修改-->
 	<update id="updateModle" parameterType="Modle">
 		UPDATE <include refid="tableName"></include>
 		SET PROJECT_ID=#{projectId},MODLE_NAME=#{modleName},MODLE_DESCRIBE=#{modleDescribe},MODLE_STATE=#{modleState}
 		WHERE ID=#{id}
 	</update>
+
+	<!-- 删除-->
+	<delete id="delModle">
+		DELETE FROM <include refid="tableName"></include>
+		WHERE ID=#{id}
+	</delete>
 
 	<!-- 新增-->
 	<insert id="saveModle" useGeneratedKeys="true" keyProperty="id">
@@ -79,6 +108,24 @@
 		) values (
 			<include refid="FieldValue"></include>
 		)
+	</insert>
+
+	<!-- 新增-->
+	<insert id="batchSaveModle" parameterType="java.util.List">
+		insert into <include refid="tableName"></include>(
+		<include refid="Field"></include>
+		)
+		values
+
+		<foreach collection ="modleList" item="modle" index= "index" separator =",">
+			(
+			#{modle.id},
+			#{modle.projectId},
+			#{modle.modleName},
+			#{modle.modleDescribe},
+			#{modle.modleState}
+			)
+		</foreach >
 	</insert>
 
 </mapper>

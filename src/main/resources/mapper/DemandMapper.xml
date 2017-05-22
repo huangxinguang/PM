@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ectrip.dao.DemandDAO">
+
+	<resultMap type="Demand" id="demandResultMap">
+		<id column="ID" property="id"/>
+		<result column="PROJECT_ID" property="projectId"/>
+		<result column="DEMAND_NAME" property="demandName"/>
+		<result column="DEMAND_DESCRIBE" property="demandDescribe"/>
+		<result column="PUT_TIME" property="putTime"/>
+		<result column="VERSION" property="version"/>
+		<result column="PUT_USERID" property="putUserId"/>
+		<result column="EXCEPT_END_TIME" property="exceptEndTime"/>
+		<result column="ACTUAL_END_TIME" property="actualEndTime"/>
+		<result column="COMPLETE_USERID" property="completeUserId"/>
+		<result column="DEMAND_STATUS" property="demandStatus"/>
+	</resultMap>
+
+	<!--表名 -->
+	<sql id="tableName">
+		DEMAND
+	</sql>
+
+	<!-- 字段 -->
+	<sql id="Field">
+		ID,
+		PROJECT_ID,
+		DEMAND_NAME,
+		DEMAND_DESCRIBE,
+		PUT_TIME,
+		VERSION,
+		PUT_USERID,
+		EXCEPT_END_TIME,
+		ACTUAL_END_TIME,
+		COMPLETE_USERID,
+		DEMAND_STATUS
+	</sql>
+
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{id},
+		#{projectId},
+		#{demandName},
+		#{demandDescribe},
+		#{putTime},
+		#{version},
+		#{putUserId},
+		#{exceptEndTime},
+		#{actualEndTime},
+		#{completeUserId},
+		#{demandStatus}
+	</sql>
+
+	<!-- 主键查询-->
+	<select id="findDemand" resultMap="demandResultMap">
+		SELECT <include refid="Field"></include> FROM <include refid="tableName"></include>
+		WHERE ID=#{id}
+	</select>
+
+	<delete id="delDemand" >
+		DELETE  FROM <include refid="tableName"></include>
+		WHERE ID=#{id}
+	</delete>
+
+	<!-- 条件查询-->
+	<select id="findDemandListPage" resultType="DemandVO">
+		SELECT  d.ID as id,
+				d.PROJECT_ID as projectId,
+				p.PROJECT_NAME as projectName,
+				d.DEMAND_NAME as demandName,
+				d.DEMAND_DESCRIBE as demandDescribe,
+				d.PUT_TIME as putTime,
+				d.VERSION as version,
+				d.PUT_USERID as putUserId,
+				d.EXCEPT_END_TIME as exceptEndTime,
+				d.ACTUAL_END_TIME as actualEndTime,
+				d.COMPLETE_USERID as completeUserId,
+				(CASE WHEN DEMAND_STATUS='0' THEN '开发中'
+				ELSE '已完成' END ) as demandStatus
+		FROM demand d,project p
+		WHERE d.project_id = p.id
+		<if test="projectId!=null and projectId!=''">
+			AND p.id=#{projectId}
+		</if>
+		<if test="projectName!=null and projectName!=''">
+			AND PROJECT_NAME LIKE CONCAT('%', #{projectName}, '%')
+		</if>
+		<if test="demandName!=null and demandName!=''">
+			AND DEMAND_NAME LIKE CONCAT('%', #{demandName}, '%')
+		</if>
+	</select>
+
+	<!-- 新增-->
+	<insert id="saveDemand" useGeneratedKeys="true" keyProperty="id">
+		insert into <include refid="tableName"></include>(
+			<include refid="Field"></include>
+		) values (
+			<include refid="FieldValue"></include>
+		)
+	</insert>
+
+	<!-- 更新-->
+	<update id="updateDemand">
+		UPDATE <include refid="tableName"></include>
+		SET
+		<if test="projectId!=null and projectId!=''">
+			PROJECT_ID=#{projectId},
+		</if>
+		<if test="demandName!=null and demandName!=''">
+			DEMAND_NAME=#{demandName},
+		</if>
+		<if test="demandDescribe!=null and demandDescribe!=''">
+			DEMAND_DESCRIBE=#{demandDescribe},
+		</if>
+		<if test="putTime!=null and putTime!=''">
+			PUT_TIME=#{putTime},
+		</if>
+		<if test="version!=null and version!=''">
+			VERSION=#{version},
+		</if>
+		<if test="putUserId!=null and putUserId!=''">
+			PUT_USER_ID=#{putUserId},
+		</if>
+		<if test="exceptEndTime!=null and exceptEndTime!=''">
+			EXCEPTT_END_TIME=#{exceptEndTime},
+		</if>
+		<if test="actualEndTime!=null and actualEndTime!=''">
+			ACTUAL_END_TIME=#{actualEndTime},
+		</if>
+		<if test="completeUserId!=null and completeUserId!=''">
+			COMPLETE_USER_ID=#{completeUserId},
+		</if>
+		<if test="demandStatus!=null and demandStatus!=''">
+			DEMAND_STATUS=#{demandStatus}
+		</if>
+		WHERE ID=#{id}
+	</update>
+
+</mapper>

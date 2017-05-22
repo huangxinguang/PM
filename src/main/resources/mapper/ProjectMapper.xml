@@ -47,8 +47,12 @@
         WHERE ID = #{projectId}
     </select>
 
+    <select id="findAllProjectList" resultMap="baseResultMap">
+        SELECT <include refid="Field"></include> FROM <include refid="tableName"></include>
+    </select>
+
     <!-- 新增-->
-    <insert id="save" useGeneratedKeys="true" keyProperty="id">
+    <insert id="saveProject" useGeneratedKeys="true" keyProperty="id">
         insert into <include refid="tableName"></include>(
         <include refid="Field"></include>
         ) values (
@@ -68,6 +72,12 @@
         where ID = #{id}
     </update>
 
+    <!-- 删除-->
+    <delete id="delProject">
+        DELETE FROM <include refid="tableName"></include>
+        WHERE ID=#{id}
+    </delete>
+
     <select id="findProjectListPage" resultMap="baseResultMap">
         SELECT
         ID,
@@ -83,7 +93,7 @@
         END) as PROJECT_STATUS
         FROM PROJECT
         WHERE 1=1
-        <if test="projectStatus!=null and projectStatus!=''">
+        <if test="projectStatus!=null and projectStatus!='' and projectStatus!='-1'">
             AND PROJECT_STATUS = #{projectStatus}
         </if>
         <if test="projectName!=null and projectName!=''">
