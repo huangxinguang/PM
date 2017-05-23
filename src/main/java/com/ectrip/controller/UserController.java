@@ -6,6 +6,11 @@ import com.ectrip.service.UserService;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -45,7 +50,8 @@ public class UserController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/addUser.html",method = RequestMethod.GET)
-    public String addUserPage() {
+    public String addUserPage(Model model) {
+        model.addAttribute("user",new User());
         return "user/addUser";
     }
 
@@ -69,8 +75,16 @@ public class UserController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/saveUser.do",method = RequestMethod.POST)
-    public ModelAndView saveUser(@ModelAttribute("user") User user) {
+    public ModelAndView saveUser(@ModelAttribute("user") @Validated User user,BindingResult result) {
         ModelAndView mav = getModelAndView();
+        boolean exists = userService.exists(user.getUserName());
+        if(exists) {
+            result.addError(new FieldError("user","userName","用户名已经存在！"));
+        }
+        if(result.hasErrors()) {
+            mav.setViewName("user/addUser");
+            return mav;
+        }
         userService.saveUser(user);
         mav.setViewName("redirect:userList.html");
         return mav;

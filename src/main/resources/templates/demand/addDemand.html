@@ -23,39 +23,39 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">选择模块</label>
                 <div class="layui-input-block" th:each="item : ${modleList}">
-                    <input type="checkbox" name="mids" th:title="${item.modleName}" th:value="${item.id}" />
+                    <input type="checkbox" required="required" name="mids" th:title="${item.modleName}" th:value="${item.id}" />
                 </div>
             </div>
 
             <div class="layui-form-item">
                 <label class="layui-form-label">需求名称</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="demandName"  lay-verify="required" autocomplete="off" class="layui-input"/>
+                    <input type="text" name="demandName" required="required"  lay-verify="required" autocomplete="off" class="layui-input"/>
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">版本号</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="version"  lay-verify="required" autocomplete="off" class="layui-input"/>
+                    <input type="text" name="version" required="required"  lay-verify="required" autocomplete="off" class="layui-input"/>
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">提出人</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="putUserId" lay-verify="required"  autocomplete="off" class="layui-input"/>
+                    <input type="text" name="putUserId" required="required"  lay-verify="required"  autocomplete="off" class="layui-input"/>
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">预期完成时间</label>
                 <div class="layui-input-inline">
-                    <input class="layui-input" name="exceptEndTime"  onclick="layui.laydate({elem: this, festival: true})"/>
+                    <input class="layui-input" name="exceptEndTime" required="required"  onclick="layui.laydate({elem: this, festival: true})"/>
                 </div>
             </div>
 
             <div class="layui-form-item">
                 <label class="layui-form-label">需求描述</label>
                 <div class="layui-input-block">
-                    <textarea name= "demandDescribe"  class="layui-textarea"></textarea>
+                    <textarea name= "demandDescribe" required="required"  class="layui-textarea"></textarea>
                 </div>
             </div>
 

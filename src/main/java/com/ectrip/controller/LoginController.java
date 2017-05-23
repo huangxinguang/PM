@@ -6,6 +6,10 @@ import com.ectrip.model.User;
 import com.ectrip.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -39,7 +43,9 @@ public class LoginController extends BaseController {
         if(success) {
             getSession().setAttribute("user",user.getUserName());
         }else {
-            new BusinessException("用户名或密码错误");
+            mav.addObject("errorMessage","用户名或密码错误");
+            mav.setViewName("login");
+            return mav;
         }
         mav.setViewName("redirect:index.html");
         return mav;

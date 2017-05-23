@@ -30,32 +30,32 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">需求名称</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="demandName" th:value="${demand.demandName}" lay-verify="required" autocomplete="off" class="layui-input"/>
+                    <input type="text" required="required"  name="demandName" th:value="${demand.demandName}" lay-verify="required" autocomplete="off" class="layui-input"/>
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">版本号</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="version" th:value="${demand.version}"   lay-verify="required" autocomplete="off" class="layui-input"/>
+                    <input type="text" name="version" th:value="${demand.version}" required="required"   lay-verify="required" autocomplete="off" class="layui-input"/>
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">提出人</label>
                 <div class="layui-input-inline">
-                    <input type="text" disabled="disabled" name="putUserId" th:value="${demand.putUserId}"  lay-verify="required"  autocomplete="off" class="layui-input"/>
+                    <input type="text" disabled="disabled" name="putUserId" th:value="${demand.putUserId}" required="required"  lay-verify="required"  autocomplete="off" class="layui-input"/>
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">预期完成时间</label>
                 <div class="layui-input-inline">
-                    <input class="layui-input" name="exceptEndTime" th:value="${demand.exceptEndTime}"  onclick="layui.laydate({elem: this, festival: true})"/>
+                    <input class="layui-input" name="exceptEndTime" th:value="${demand.exceptEndTime}" required="required"  onclick="layui.laydate({elem: this, festival: true})"/>
                 </div>
             </div>
 
             <div class="layui-form-item">
                 <label class="layui-form-label">需求描述</label>
                 <div class="layui-input-block">
-                    <textarea name= "demandDescribe"  th:text="${demand.demandDescribe}"  class="layui-textarea"></textarea>
+                    <textarea name= "demandDescribe"  th:text="${demand.demandDescribe}" required="required"  class="layui-textarea"></textarea>
                 </div>
             </div>
 

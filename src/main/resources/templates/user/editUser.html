@@ -17,18 +17,34 @@
         </fieldset>
 
 
-        <form name="user" class="layui-form" action="/user/saveUser.do" method="post">
+        <form name="user" class="layui-form" action="/user/saveUser.do" th:object="${user}" method="post">
 
             <div class="layui-form-item">
                 <label class="layui-form-label">用户名</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="userName" th:value="${user.userName}" autocomplete="off" class="layui-input"/>
+                    <input type="text" name="userName" th:field="*{userName}"  th:value="${user.userName}" autocomplete="off" class="layui-input"/>
+                    <p th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}" style="color: red"></p>
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">用户密码</label>
                 <div class="layui-input-inline">
-                    <input type="password" name="password" th:value="${user.password}" autocomplete="off" class="layui-input"/>
+                    <input type="password" name="password" th:field="*{password}"  th:value="${user.password}" autocomplete="off" class="layui-input"/>
+                    <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" style="color: red"></p>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">确认密码</label>
+                <div class="layui-input-inline">
+                    <input type="password" name="repassword" required="required" autocomplete="off" class="layui-input"/>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">确认密码</label>
+                <div class="layui-input-inline">
+                    <input type="password" name="repassword" required="required" autocomplete="off" class="layui-input"/>
                 </div>
             </div>
             <div class="layui-form-item">

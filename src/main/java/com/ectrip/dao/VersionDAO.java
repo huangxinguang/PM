@@ -16,4 +16,24 @@ public interface VersionDAO extends BaseDAO<Version> {
      * @param versionList
      */
     void batchSave(@Param("versionList")List<Version> versionList);
+
+    /**
+     * 通过需求id 查询版本
+     * @param demandId
+     * @return
+     */
+    List<Version> queryVersionList(Integer demandId);
+
+    /**
+     * 查看模块版本列表
+     * @param modleId
+     * @return
+     */
+    List<Version> queryModleVersionList(@Param("pageNum")Integer pageNo,@Param("pageSize")Integer pageSize,@Param("modleId") Integer modleId);
+
+    /**
+     * 批量更新版本状态
+     * @param versionList
+     */
+    void batchUpdateState(@Param("versionList")List<Version> versionList);
 }

@@ -4,6 +4,7 @@ import com.ectrip.base.BaseController;
 import com.ectrip.model.Modle;
 import com.ectrip.model.ModlePrototype;
 import com.ectrip.model.Project;
+import com.ectrip.model.Version;
 import com.ectrip.service.ModleService;
 import com.ectrip.service.ProjectService;
 import com.github.pagehelper.PageInfo;
@@ -49,6 +50,23 @@ public class ProjectModleController extends BaseController {
         mav.addObject("modleState",modleState);
         mav.addObject("projectList",projectList);
         mav.setViewName("projectModle/projectModleList");
+        return mav;
+    }
+
+    /**
+     * 模块版本列表
+     * @param pageNo
+     * @return
+     */
+    @RequestMapping(value = "/modleVersionList.html",method = RequestMethod.GET)
+    public ModelAndView modleList(Integer pageNo,Integer modleId){
+        if(pageNo != null) {
+            pageNo = 1;
+        }
+        ModelAndView mav = getModelAndView();
+        PageInfo<Version> pageInfo = modleService.queryModleVersionList(pageNo,pageSize,modleId);
+        mav.addObject("pageInfo",pageInfo);
+        mav.setViewName("projectModle/modleVersionList");
         return mav;
     }
 

@@ -17,7 +17,10 @@ public interface ModleDAO extends BaseDAO<Modle>{
      * @param modleList
      * @return
      */
-    void batchSaveModle(@Param("modleList") List<Modle> modleList);
+    void batchSave(@Param("modleList") List<Modle> modleList);
+
+
+    void batchUpdateState(@Param("modleList") List<Modle> modleList);
 
 
     /**

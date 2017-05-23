@@ -24,13 +24,13 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">模块名称</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="modlePrototypeName" th:value="${modlePro.modlePrototypeName}" placeholder="请输入模块名称" autocomplete="off" class="layui-input"/>
+                    <input type="text" name="modlePrototypeName" th:value="${modlePro.modlePrototypeName}" required="required"  autocomplete="off" class="layui-input"/>
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">模块描述</label>
                 <div class="layui-input-block">
-                    <textarea name= "modlePrototypeDescribe" th:text="${modlePro.modlePrototypeDescribe}" placeholder="请输入模块描述" class="layui-textarea"></textarea>
+                    <textarea name= "modlePrototypeDescribe" th:text="${modlePro.modlePrototypeDescribe}" required="required"  class="layui-textarea"></textarea>
                 </div>
             </div>
             <div class="layui-form-item">

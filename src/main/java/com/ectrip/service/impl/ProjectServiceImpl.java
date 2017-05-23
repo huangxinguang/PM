@@ -53,7 +53,7 @@ public class ProjectServiceImpl implements ProjectService {
                 modle.setProjectId(project.getId());
                 modleList.add(modle);
             }
-            modleDAO.batchSaveModle(modleList);
+            modleDAO.batchSave(modleList);
 
         }
     }

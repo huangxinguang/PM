@@ -16,5 +16,7 @@ public interface UserService {
 
     boolean  check(String userName,String password);
 
+    boolean exists(String userName);
+
     void deleteUser(Integer userId);
 }

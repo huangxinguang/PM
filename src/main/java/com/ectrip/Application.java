@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 /**
  * Created by huangxinguang on 2017/5/11 下午5:08.
  */
+//开启事物
 @EnableTransactionManagement
 @SpringBootApplication
 // mapper 接口类扫描包配置

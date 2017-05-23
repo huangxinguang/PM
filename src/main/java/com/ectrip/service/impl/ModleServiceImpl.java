@@ -2,8 +2,10 @@ package com.ectrip.service.impl;
 
 import com.ectrip.dao.ModleDAO;
 import com.ectrip.dao.ModlePrototypeDAO;
+import com.ectrip.dao.VersionDAO;
 import com.ectrip.model.Modle;
 import com.ectrip.model.ModlePrototype;
+import com.ectrip.model.Version;
 import com.ectrip.service.ModleService;
 import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
@@ -24,6 +26,8 @@ public class ModleServiceImpl implements ModleService {
 
     @Autowired
     private ModleDAO modleDAO;
+    @Autowired
+    private VersionDAO versionDAO;
 
     /**
      * 新增项目模块
@@ -72,6 +76,12 @@ public class ModleServiceImpl implements ModleService {
     public PageInfo<Modle> queryModleList(Integer pageNo, Integer pageSize, Integer projectId, String modleName, String modleState){
         List<Modle> list = modleDAO.queryModle(pageNo,pageSize,projectId,modleName,modleState);
         return new PageInfo<>(list);
+    }
+
+    @Override
+    public PageInfo<Version> queryModleVersionList(Integer pageNo, Integer pageSize, Integer modleId) {
+        List<Version> versionList = versionDAO.queryModleVersionList(pageNo,pageSize,modleId);
+        return new PageInfo<>(versionList);
     }
 
     /**

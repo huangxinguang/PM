@@ -105,7 +105,7 @@
 	</insert>
 
 	<!-- 新增-->
-	<insert id="batchSaveModle" parameterType="java.util.List">
+	<insert id="batchSave" parameterType="java.util.List">
 		insert into <include refid="tableName"></include>(
 		<include refid="Field"></include>
 		)
@@ -121,5 +121,13 @@
 			)
 		</foreach >
 	</insert>
+	<!--批量更新模块状态-->
+	<update id="batchUpdateState" parameterType="java.util.List">
+		<foreach collection="modleList" index="index" item="item" open="" separator=";">
+			update  <include refid="tableName"></include>
+			set MODLE_STATE=#{item.modleState}
+			where ID=#{item.id}
+		</foreach>
+	</update>
 
 </mapper>

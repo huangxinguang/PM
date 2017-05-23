@@ -22,31 +22,31 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">项目名称</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="projectName"  lay-verify="required" placeholder="请输入项目名称" autocomplete="off" class="layui-input"/>
+                    <input type="text" name="projectName" required="required"  lay-verify="required"  autocomplete="off" class="layui-input"/>
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">项目负责人</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="projectLeader"  lay-verify="required" placeholder="请输入项目负责人" autocomplete="off" class="layui-input"/>
+                    <input type="text" name="projectLeader" required="required"  lay-verify="required"  autocomplete="off" class="layui-input"/>
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">负责人电话</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="phone" lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input"/>
+                    <input type="text" name="phone" lay-verify="required" required="required"  autocomplete="off" class="layui-input"/>
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">负责人qq</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="qq" lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input"/>
+                    <input type="text" name="qq" lay-verify="required" required="required" autocomplete="off" class="layui-input"/>
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">负责人邮箱</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="email" lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input"/>
+                    <input type="text" name="email" lay-verify="required" required="required" autocomplete="off" class="layui-input"/>
                 </div>
             </div>
 
@@ -60,7 +60,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">项目状态</label>
                 <div class="layui-input-block">
-                    <input type="radio" name="projectStatus" value="1" title="开发中"/>
+                    <input type="radio" CHECKED="checked" name="projectStatus" value="1" title="开发中"/>
                     <input type="radio" name="projectStatus" value="2" title="升级中"/>
                     <input type="radio" name="projectStatus" value="3" title="已完成"/>
                 </div>

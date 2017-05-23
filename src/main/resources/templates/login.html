@@ -21,18 +21,19 @@
 		<h1>后台登录</h1>
 	</header>
 	<div class="beg-login-main">
-		<form action="/loginIn.do" class="layui-form" method="post"><input name="__RequestVerificationToken" type="hidden" value="fkfh8D89BFqTdrE2iiSdG_L781RSRtdWOH411poVUWhxzA5MzI8es07g6KPYQh9Log-xf84pIR2RIAEkOokZL3Ee3UKmX0Jc8bW8jOdhqo81" />
+		<form action="/loginIn.do" class="layui-form" method="post">
+			<input name="__RequestVerificationToken" type="hidden" value="fkfh8D89BFqTdrE2iiSdG_L781RSRtdWOH411poVUWhxzA5MzI8es07g6KPYQh9Log-xf84pIR2RIAEkOokZL3Ee3UKmX0Jc8bW8jOdhqo81" />
 			<div class="layui-form-item">
 				<label class="beg-login-icon">
 					<i class="layui-icon">&#xe612;</i>
 				</label>
-				<input type="text" name="userName" lay-verify="userName" autocomplete="off" placeholder="这里输入登录名" class="layui-input"/>
+				<input type="text" name="userName" required="required" lay-verify="userName" autocomplete="off" placeholder="这里输入登录名" class="layui-input"/>
 			</div>
 			<div class="layui-form-item">
 				<label class="beg-login-icon">
 					<i class="layui-icon">&#xe642;</i>
 				</label>
-				<input type="password" name="password" lay-verify="password" autocomplete="off" placeholder="这里输入密码" class="layui-input"/>
+				<input type="password" name="password" lay-verify="password" required="required" autocomplete="off" placeholder="这里输入密码" class="layui-input"/>
 			</div>
 			<div class="layui-form-item">
 				<div class="beg-pull-left beg-login-remember">
@@ -44,7 +45,9 @@
 						<i class="layui-icon">&#xe650;</i> 登录
 					</button>
 				</div>
-				<div class="beg-clear"></div>
+				<div class="beg-clear">
+					<p th:text="${errorMessage}" style="color: red"></p>
+				</div>
 			</div>
 		</form>
 	</div>

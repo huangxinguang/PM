@@ -1,9 +1,11 @@
 package com.ectrip.service.impl;
 
 import com.ectrip.dao.DemandDAO;
+import com.ectrip.dao.ModleDAO;
 import com.ectrip.dao.ModleDemandDAO;
 import com.ectrip.dao.VersionDAO;
 import com.ectrip.model.Demand;
+import com.ectrip.model.Modle;
 import com.ectrip.model.ModleDemand;
 import com.ectrip.model.Version;
 import com.ectrip.service.DemandService;
@@ -32,6 +34,9 @@ public class DemandServiceImpl implements DemandService {
     private DemandDAO demandDAO;
 
     @Autowired
+    private ModleDAO modleDAO;
+
+    @Autowired
     private VersionDAO versionDAO;
 
     @Transactional
@@ -42,13 +47,14 @@ public class DemandServiceImpl implements DemandService {
 
     @Transactional
     public void saveDemand(Demand demand,List<Integer> modleIdList) {
-        //保存需求
+        /**保存需求*/
         demand.setDemandStatus("0");
         demand.setPutTime(DateUtil.getDateTime(new Date()));
         demandDAO.save(demand);
 
-        //组装模块并批量保存
+        /**组装模块并批量保存*/
         List<ModleDemand> modleDemandList = new ArrayList<>();
+
         ModleDemand modleDemand = null;
         for(Integer modleId:modleIdList) {
             modleDemand = new ModleDemand();
@@ -58,36 +64,21 @@ public class DemandServiceImpl implements DemandService {
         }
         modleDemandDAO.batchSave(modleDemandList);
 
+        /**组装并修改项目模块状态 为开发中*/
+        List<Modle> modleList = new ArrayList<>();
+        Modle modle = null;
+        for(Integer modleId:modleIdList) {
+            modle = new Modle();
+            modle.setId(modleId);
+            modle.setModleState("0");
+            modleList.add(modle);
+        }
+        modleDAO.batchUpdateState(modleList);
     }
 
     @Transactional
     public void updateDemand(Demand demand) {
-        /**更新需求*/
         demandDAO.update(demand);
-        Demand oldDemand = demandDAO.find(demand.getId());
-
-        /**如有变动，保存新版本并停用之前版本*/
-        if(!demand.getVersion().equals(oldDemand.getVersion())) {//版本变动
-            List<ModleDemand> modleDemandList = modleDemandDAO.findModleDemandList(demand.getId());
-            //组装版本并批量保存
-            List<Version> versionList = new ArrayList<>();
-            Version version = null;
-            for(ModleDemand modleDemand:modleDemandList) {
-                version  =  new Version();
-                version.setDemandId(demand.getId());
-                version.setModleId(modleDemand.getModleId());
-                version.setUpTime(DateUtil.getDateTime(new Date()));
-                version.setVersion(demand.getVersion());
-                version.setUpUserId(demand.getPutUserId());
-                version.setVersionState(1);
-                version.setVersionId(0);
-                versionList.add(version);
-            }
-            if(!CollectionUtils.isEmpty(versionList)) {
-                versionDAO.batchSave(versionList);
-            }
-        }
-
     }
 
     @Transactional
@@ -102,7 +93,7 @@ public class DemandServiceImpl implements DemandService {
 
     @Transactional
     public void completeDemand(Demand demand) {
-        //修改需求信息
+        /**修改需求信息*/
         List<ModleDemand> modleDemandList = modleDemandDAO.findModleDemandList(demand.getId());
         Demand demandOld = demandDAO.find(demand.getId());
         demandOld.setActualEndTime(demand.getActualEndTime());
@@ -110,8 +101,25 @@ public class DemandServiceImpl implements DemandService {
         demandOld.setDemandStatus("1");//完成状态
         demandDAO.update(demandOld);
 
+        /**组装并批量修改模块状态 为已完成*/
+        List<Modle> modleList = new ArrayList<>();
+        Modle modle = null;
+        for(ModleDemand modleDemand:modleDemandList) {
+            modle = new Modle();
+            modle.setId(modleDemand.getModleId());
+            modle.setModleState("1");
+            modleList.add(modle);
+        }
+        modleDAO.batchUpdateState(modleList);
 
-        //组装版本并批量保存
+        /**批量停用旧模块版本*/
+        List<Version> oldVersionList = versionDAO.queryVersionList(demand.getId());
+        for(Version oldVersion:oldVersionList) {
+            oldVersion.setVersionState(0);
+        }
+        versionDAO.batchUpdateState(oldVersionList);
+
+        /**组装版本并批量保存*/
         List<Version> versionList = new ArrayList<>();
         Version version = null;
         for(ModleDemand modleDemand:modleDemandList) {
@@ -129,7 +137,5 @@ public class DemandServiceImpl implements DemandService {
         if(!CollectionUtils.isEmpty(versionList)) {
             versionDAO.batchSave(versionList);
         }
-
-
     }
 }

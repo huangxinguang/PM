@@ -24,14 +24,14 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">实际完成时间</label>
                 <div class="layui-input-inline">
-                    <input class="layui-input" th:value="${currentDateTime}" name="actualEndTime"  onclick="layui.laydate({elem: this, festival: true})"/>
+                    <input class="layui-input" required="required"  th:value="${currentDateTime}" name="actualEndTime"  onclick="layui.laydate({elem: this, festival: true})"/>
                 </div>
             </div>
 
             <div class="layui-form-item">
                 <label class="layui-form-label">完成人</label>
                 <div class="layui-input-inline">
-                    <input type="text"  th:value="${userName}" name="completeUserId" lay-verify="required"  autocomplete="off" class="layui-input"/>
+                    <input type="text" required="required"  th:value="${userName}" name="completeUserId" lay-verify="required"  autocomplete="off" class="layui-input"/>
                 </div>
             </div>
 

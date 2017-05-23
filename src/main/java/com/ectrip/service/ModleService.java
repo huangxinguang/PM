@@ -2,6 +2,7 @@ package com.ectrip.service;
 
 import com.ectrip.model.Modle;
 import com.ectrip.model.ModlePrototype;
+import com.ectrip.model.Version;
 import com.github.pagehelper.PageInfo;
 
 import java.util.List;
@@ -46,6 +47,7 @@ public interface ModleService {
      */
     PageInfo<Modle> queryModleList(Integer pageNo, Integer pageSize, Integer projectId, String modleName, String modleState);
 
+    PageInfo<Version> queryModleVersionList(Integer pageNo, Integer pageSize, Integer modleId);
     /**
      * 获取项目模块列表
      * @param projectId

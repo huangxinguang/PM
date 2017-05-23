@@ -63,6 +63,18 @@
 		</if>
 	</select>
 
+	<!-- 条件查询-->
+	<select id="queryVersionList" resultMap="versionResultMap" parameterType="int">
+		SELECT <include refid="Field"></include> FROM <include refid="tableName"></include>
+		WHERE DEMAND_ID=#{demandId}
+	</select>
+
+	<!-- 条件查询-->
+	<select id="queryModleVersionList" resultMap="versionResultMap">
+		SELECT <include refid="Field"></include> FROM <include refid="tableName"></include>
+		WHERE MODLE_ID=#{modleId}
+	</select>
+
 	<!-- 修改
 	<update id="updateVersion" parameterType="Version">
 		UPDATE <include refid="tableName"></include>
@@ -98,5 +110,15 @@
 			)
 		</foreach >
 	</insert>
+
+
+	<!--批量更新模块状态-->
+	<update id="batchUpdateState" parameterType="java.util.List">
+		<foreach collection="versionList" index="index" item="item" open="" separator=";">
+			update  <include refid="tableName"></include>
+			set VERSION_STATE=#{item.versionState}
+			where ID=#{item.id}
+		</foreach>
+	</update>
 
 </mapper>

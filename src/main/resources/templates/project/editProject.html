@@ -24,32 +24,32 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">项目名称</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="projectName" th:value="${project.projectName}" placeholder="请输入项目名称" autocomplete="off" class="layui-input"/>
+                    <input type="text" name="projectName" th:value="${project.projectName}" required="required" autocomplete="off" class="layui-input"/>
                 </div>
             </div>
 
             <div class="layui-form-item">
                 <label class="layui-form-label">项目负责人</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="projectLeader" th:value="${project.projectLeader}" placeholder="请输入项目负责人" autocomplete="off" class="layui-input"/>
+                    <input type="text" name="projectLeader" th:value="${project.projectLeader}" required="required" autocomplete="off" class="layui-input"/>
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">负责人电话</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="phone" th:value="${project.phone}" placeholder="请输入密码" autocomplete="off" class="layui-input"/>
+                    <input type="text" name="phone" th:value="${project.phone}" required="required" autocomplete="off" class="layui-input"/>
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">负责人qq</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="qq" th:value="${project.qq}" placeholder="请输入密码" autocomplete="off" class="layui-input"/>
+                    <input type="text" name="qq" th:value="${project.qq}" required="required" autocomplete="off" class="layui-input"/>
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">负责人邮箱</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="email" th:value="${project.email}" placeholder="请输入密码" autocomplete="off" class="layui-input"/>
+                    <input type="text" name="email" th:value="${project.email}" required="required" autocomplete="off" class="layui-input"/>
                 </div>
             </div>
 
@@ -63,7 +63,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">项目状态</label>
                 <div class="layui-input-block">
-                    <input type="radio" name="projectStatus" value="1" title="开发中"/>
+                    <input type="radio" checked="checked" name="projectStatus" value="1" title="开发中"/>
                     <input type="radio" name="projectStatus" value="2" title="升级中"/>
                     <input type="radio" name="projectStatus" value="3" title="已完成"/>
                 </div>

@@ -30,13 +30,13 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">模块名称</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="modleName" placeholder="请输入模块名称" autocomplete="off" class="layui-input"/>
+                    <input type="text" name="modleName" required="required"  autocomplete="off" class="layui-input"/>
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">模块状态</label>
                 <div class="layui-input-block">
-                    <input type="radio" name="modleState" value="0" title="开发中"/>
+                    <input type="radio" checked="checked" name="modleState" value="0" title="开发中"/>
                     <input type="radio" name="modleState" value="1" title="已完成"/>
                 </div>
             </div>
@@ -44,7 +44,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">模块描述</label>
                 <div class="layui-input-block">
-                    <textarea name= "modleDescribe" placeholder="请输入模块描述" class="layui-textarea"></textarea>
+                    <textarea name= "modleDescribe" required="required"  class="layui-textarea"></textarea>
                 </div>
             </div>
             <div class="layui-form-item">
