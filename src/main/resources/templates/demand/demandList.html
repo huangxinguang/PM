@@ -98,7 +98,7 @@
 								<td th:text="${item.completeUserId}"></td>
 								<td th:text="${item.demandStatus}"></td>
 								<td>
-									<a th:data="${item.id}" class="layui-btn layui-btn-default layui-btn-mini">
+									<a th:data="${item.id}" th:if="${item.completeUserId==null}" class="layui-btn layui-btn-default layui-btn-mini">
 										<i class="layui-icon">&#xe642;完成</i>
 									</a>
 								</td>

@@ -11,6 +11,7 @@ import com.ectrip.utils.DateUtil;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -31,7 +32,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Autowired
     private ModleDAO modleDAO;
 
-    @Override
+    @Transactional
     public void saveProject(Project project,List<Integer> modleIdList) {
         project.setOperateTime(DateUtil.getDateTime(new Date()));
 

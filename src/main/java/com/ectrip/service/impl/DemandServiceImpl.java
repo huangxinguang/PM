@@ -12,6 +12,7 @@ import com.ectrip.vo.DemandVO;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
@@ -33,12 +34,13 @@ public class DemandServiceImpl implements DemandService {
     @Autowired
     private VersionDAO versionDAO;
 
+    @Transactional
     public PageInfo<DemandVO> queryDemandListPage(Integer pageNo,Integer pagesSize,Integer projectId,String projectName,String demandName) {
         List<DemandVO> demandVOList = demandDAO.findDemandListPage(pageNo,pagesSize,projectId,projectName,demandName);
         return new PageInfo<>(demandVOList);
     }
 
-
+    @Transactional
     public void saveDemand(Demand demand,List<Integer> modleIdList) {
         //保存需求
         demand.setDemandStatus("0");
@@ -58,23 +60,47 @@ public class DemandServiceImpl implements DemandService {
 
     }
 
-    @Override
+    @Transactional
     public void updateDemand(Demand demand) {
+        /**更新需求*/
         demandDAO.update(demand);
-        //List<ModleDemand> modleDemandList = modleDemandDAO.findModleDemandList(demand.getId());
+        Demand oldDemand = demandDAO.find(demand.getId());
+
+        /**如有变动，保存新版本并停用之前版本*/
+        if(!demand.getVersion().equals(oldDemand.getVersion())) {//版本变动
+            List<ModleDemand> modleDemandList = modleDemandDAO.findModleDemandList(demand.getId());
+            //组装版本并批量保存
+            List<Version> versionList = new ArrayList<>();
+            Version version = null;
+            for(ModleDemand modleDemand:modleDemandList) {
+                version  =  new Version();
+                version.setDemandId(demand.getId());
+                version.setModleId(modleDemand.getModleId());
+                version.setUpTime(DateUtil.getDateTime(new Date()));
+                version.setVersion(demand.getVersion());
+                version.setUpUserId(demand.getPutUserId());
+                version.setVersionState(1);
+                version.setVersionId(0);
+                versionList.add(version);
+            }
+            if(!CollectionUtils.isEmpty(versionList)) {
+                versionDAO.batchSave(versionList);
+            }
+        }
+
     }
 
-    @Override
+    @Transactional
     public Demand queryDemand(Integer demandId) {
         return demandDAO.find(demandId);
     }
 
-    @Override
+    @Transactional
     public void delDemand(Integer demandId) {
         demandDAO.delete(demandId);
     }
 
-    @Override
+    @Transactional
     public void completeDemand(Demand demand) {
         //修改需求信息
         List<ModleDemand> modleDemandList = modleDemandDAO.findModleDemandList(demand.getId());
@@ -94,7 +120,7 @@ public class DemandServiceImpl implements DemandService {
             version.setModleId(modleDemand.getModleId());
             version.setUpTime(DateUtil.getDateTime(new Date()));
             version.setVersion(demandOld.getVersion());
-            version.setUpUserId("admin");
+            version.setUpUserId( demand.getPutUserId());
             version.setVersionState(1);
             version.setVersionId(-1);
             versionList.add(version);

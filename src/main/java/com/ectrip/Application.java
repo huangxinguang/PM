@@ -3,10 +3,12 @@ package com.ectrip;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
  * Created by huangxinguang on 2017/5/11 下午5:08.
  */
+@EnableTransactionManagement
 @SpringBootApplication
 // mapper 接口类扫描包配置
 @MapperScan("com.ectrip.dao")

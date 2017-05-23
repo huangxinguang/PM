@@ -7,6 +7,7 @@ import com.ectrip.vo.ProjectInfoVO;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class ProjectInfoServiceImpl implements ProjectInfoService {
     @Autowired
     private ProjectInfoDAO projectInfoDAO;
 
-    @Override
+    @Transactional
     public void saveProjectInfo(ProjectInfo projectInfo) {
         if(projectInfo.getId() != null) {
             projectInfoDAO.update(projectInfo);
