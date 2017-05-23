@@ -40,7 +40,7 @@
 		ELSE '已完成'
 		END) as MODLE_STATE
 		FROM <include refid="tableName"></include>
-		WHERE PROJECT_ID=#{projectId}
+		WHERE MODLE_STATE='1' and PROJECT_ID=#{projectId}
 	</select>
 
 	<!-- 条件查询-->

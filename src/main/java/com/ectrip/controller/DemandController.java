@@ -11,6 +11,8 @@ import com.ectrip.vo.DemandVO;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -83,16 +86,32 @@ public class DemandController extends BaseController {
     public ModelAndView editDemandPage(Integer demandId){
         ModelAndView mav = getModelAndView();
 
-        //组装modleIdList
+        //组装modleIdList 并查询需求的模块
         List<ModleDemand> modleDemandList = modleDemandService.findModleDemandList(demandId);
         List<Integer> modleIdList = new ArrayList<>();
         modleIdList.add(0);
         for(ModleDemand modleDemand:modleDemandList) {
             modleIdList.add(modleDemand.getModleId());
         }
-
         List<Modle> modleList = modleService.queryModleList(modleIdList);
+
+
+        //查询项目模块，提取 非需求模块
         Demand demand = demandService.queryDemand(demandId);
+        List<Modle> projectModleList = modleService.findProjectModleList(demand.getProjectId());
+        if(!CollectionUtils.isEmpty(modleIdList)) {
+            Iterator<Modle> iterator = projectModleList.iterator();
+            while (iterator.hasNext()) {
+                Modle modle = iterator.next();
+                for(Integer modleId:modleIdList) {
+                    if(modle.getId().intValue() == modleId.intValue()) {
+                        iterator.remove();
+                    }
+                }
+            }
+        }
+
+        mav.addObject("noSelectModleList",projectModleList);
         mav.addObject("modleList",modleList);
         mav.addObject("demand",demand);
         mav.setViewName("demand/editDemand");
@@ -105,9 +124,13 @@ public class DemandController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/editDemand.do",method = RequestMethod.POST)
-    public ModelAndView editDemandPage(@ModelAttribute("demand") Demand demand){
+    public ModelAndView editDemandPage(@ModelAttribute("demand") Demand demand,@RequestParam("mids") String[] mids){
         ModelAndView mav = getModelAndView();
-        demandService.updateDemand(demand);
+        List<Integer> modleIdList = new ArrayList<>();
+        for(String mid:mids) {
+            modleIdList.add(Integer.valueOf(mid));
+        }
+        demandService.updateDemand(demand,modleIdList);
         mav.setViewName("redirect:demandList.html");
         return mav;
     }

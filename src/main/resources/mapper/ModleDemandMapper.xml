@@ -28,9 +28,14 @@
 	</sql>
 
 	<!-- 主键查询-->
-	<select id="findModle" resultMap="modleDemandResultMap">
+	<select id="find" resultMap="modleDemandResultMap">
 		SELECT <include refid="Field"></include> FROM <include refid="tableName"></include>
 		WHERE ID=#{id}
+	</select>
+
+	<select id="deleteModleDemand" parameterType="int">
+		DELETE FROM <include refid="tableName"></include>
+		WHERE DEMAND_ID=#{demandId}
 	</select>
 
 
@@ -43,14 +48,14 @@
 
 
 	<!-- 修改-->
-	<update id="updateModle" parameterType="Modle">
+	<update id="update" parameterType="Modle">
 		UPDATE <include refid="tableName"></include>
 		SET PROJECT_ID=#{projectId},MODLE_NAME=#{modleName},MODLE_DESCRIBE=#{modleDescribe},MODLE_STATE=#{modleState}
 		WHERE ID=#{id}
 	</update>
 
 	<!-- 新增-->
-	<insert id="saveModle" useGeneratedKeys="true" keyProperty="id">
+	<insert id="save" useGeneratedKeys="true" keyProperty="id">
 		insert into <include refid="tableName"></include>(
 			<include refid="Field"></include>
 		) values (

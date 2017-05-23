@@ -17,10 +17,10 @@ public interface ModleDemandDAO extends BaseDAO<ModleDemand>{
     void batchSave(@Param("modleDemandList") List<ModleDemand> modleDemandList);
 
     /**
-     * 批量删除
-     * @param modleDemandIdList
+     * 删除需求所有模块关联
+     * @param id
      */
-    void batchDelete(@Param("modleDemandIdList") List<Integer> modleDemandIdList);
+    void deleteModleDemand(Integer id);
 
     /**
      * 通过需求id查询模块列表

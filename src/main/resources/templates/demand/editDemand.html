@@ -23,9 +23,14 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">模块</label>
                 <div class="layui-input-block" th:each="item : ${modleList}">
-                    <input disabled="disabled" type="checkbox" name="mids" th:title="${item.modleName}" checked="checked" th:value="${item.id}" />
+                    <input type="checkbox" name="mids" th:title="${item.modleName}" checked="checked" th:value="${item.id}" />
+                </div>
+
+                <div class="layui-input-block" th:each="item : ${noSelectModleList}">
+                    <input  type="checkbox" name="mids" th:title="${item.modleName}"  th:value="${item.id}" />
                 </div>
             </div>
+
 
             <div class="layui-form-item">
                 <label class="layui-form-label">需求名称</label>

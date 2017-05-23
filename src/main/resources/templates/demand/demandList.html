@@ -103,7 +103,7 @@
 									</a>
 								</td>
 								<td>
-									<a th:data="${item.id}" class="layui-btn layui-btn-normal layui-btn-mini">
+									<a th:data="${item.id}" th:if="${item.completeUserId!=null}" class="layui-btn layui-btn-normal layui-btn-mini">
 										<i class="layui-icon">&#xe642;</i>
 									</a>
 									<a th:data="${item.id}" class="layui-btn layui-btn-danger layui-btn-mini">

@@ -62,7 +62,9 @@ public class DemandServiceImpl implements DemandService {
             modleDemand.setDemandId(demand.getId());
             modleDemandList.add(modleDemand);
         }
-        modleDemandDAO.batchSave(modleDemandList);
+        if(!CollectionUtils.isEmpty(modleDemandList)) {
+            modleDemandDAO.batchSave(modleDemandList);
+        }
 
         /**组装并修改项目模块状态 为开发中*/
         List<Modle> modleList = new ArrayList<>();
@@ -73,12 +75,32 @@ public class DemandServiceImpl implements DemandService {
             modle.setModleState("0");
             modleList.add(modle);
         }
-        modleDAO.batchUpdateState(modleList);
+        if(!CollectionUtils.isEmpty(modleList)) {
+            modleDAO.batchUpdateState(modleList);
+        }
     }
 
     @Transactional
-    public void updateDemand(Demand demand) {
+    public void updateDemand(Demand demand,List<Integer> modleIdList) {
+        /**更新需求信息*/
         demandDAO.update(demand);
+
+        /**删除所有关联模块*/
+        modleDemandDAO.deleteModleDemand(demand.getId());
+
+
+        /**组装并批量增加 选择的模块*/
+        List<ModleDemand> modleDemandList = new ArrayList<>();
+        ModleDemand modleDemand = null;
+        for(Integer modleId:modleIdList) {
+            modleDemand = new ModleDemand();
+            modleDemand.setDemandId(demand.getId());
+            modleDemand.setModleId(modleId);
+            modleDemandList.add(modleDemand);
+        }
+        if(!CollectionUtils.isEmpty(modleDemandList)) {
+            modleDemandDAO.batchSave(modleDemandList);
+        }
     }
 
     @Transactional
@@ -110,14 +132,20 @@ public class DemandServiceImpl implements DemandService {
             modle.setModleState("1");
             modleList.add(modle);
         }
-        modleDAO.batchUpdateState(modleList);
+
+        if(!CollectionUtils.isEmpty(modleList)) {
+            modleDAO.batchUpdateState(modleList);
+        }
 
         /**批量停用旧模块版本*/
         List<Version> oldVersionList = versionDAO.queryVersionList(demand.getId());
         for(Version oldVersion:oldVersionList) {
             oldVersion.setVersionState(0);
         }
-        versionDAO.batchUpdateState(oldVersionList);
+
+        if(!CollectionUtils.isEmpty(oldVersionList)) {
+            versionDAO.batchUpdateState(oldVersionList);
+        }
 
         /**组装版本并批量保存*/
         List<Version> versionList = new ArrayList<>();
