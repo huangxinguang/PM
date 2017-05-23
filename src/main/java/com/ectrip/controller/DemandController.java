@@ -6,6 +6,7 @@ import com.ectrip.model.Modle;
 import com.ectrip.model.ModleDemand;
 import com.ectrip.model.Project;
 import com.ectrip.service.*;
+import com.ectrip.utils.DateUtil;
 import com.ectrip.vo.DemandVO;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -100,17 +102,12 @@ public class DemandController extends BaseController {
     /**
      * 编辑需求
      * @param demand
-     * @param mids
      * @return
      */
-    @RequestMapping(value = "/editDemand.do",method = RequestMethod.GET)
-    public ModelAndView editDemandPage(@ModelAttribute("demand") Demand demand, @RequestParam("mids") String[] mids){
+    @RequestMapping(value = "/editDemand.do",method = RequestMethod.POST)
+    public ModelAndView editDemandPage(@ModelAttribute("demand") Demand demand){
         ModelAndView mav = getModelAndView();
-        List<Integer> modleIdList = new ArrayList<>();
-        for(String mid:mids) {
-            modleIdList.add(Integer.valueOf(mid));
-        }
-        demandService.updateDemand(demand,modleIdList);
+        demandService.updateDemand(demand);
         mav.setViewName("redirect:demandList.html");
         return mav;
     }
@@ -139,6 +136,8 @@ public class DemandController extends BaseController {
     public ModelAndView completeDemandPage(Integer demandId) {
         ModelAndView mav = getModelAndView();
         mav.addObject("demandId",demandId);
+        mav.addObject("userName",getCurrentUser());
+        mav.addObject("currentDateTime", DateUtil.getDateTime(new Date()));
         mav.setViewName("demand/completeDemand");
         return mav;
     }

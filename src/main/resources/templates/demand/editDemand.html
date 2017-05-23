@@ -18,12 +18,12 @@
 
 
         <form class="layui-form" action="/demand/editDemand.do" method="post">
-            <input type="hidden" name="demandId" th:value="${demand.id}"/>
+            <input type="hidden" name="id" th:value="${demand.id}"/>
 
             <div class="layui-form-item">
                 <label class="layui-form-label">模块</label>
                 <div class="layui-input-block" th:each="item : ${modleList}">
-                    <input type="checkbox" name="mids" th:title="${item.modleName}" th:value="${item.id}" />
+                    <input disabled="disabled" type="checkbox" name="mids" th:title="${item.modleName}" checked="checked" th:value="${item.id}" />
                 </div>
             </div>
 
@@ -42,7 +42,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">提出人</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="putUserId" th:value="${demand.putUserId}"  lay-verify="required"  autocomplete="off" class="layui-input"/>
+                    <input type="text" disabled="disabled" name="putUserId" th:value="${demand.putUserId}"  lay-verify="required"  autocomplete="off" class="layui-input"/>
                 </div>
             </div>
             <div class="layui-form-item">

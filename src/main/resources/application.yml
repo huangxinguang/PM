@@ -1,25 +1,32 @@
+# Tomcat
 server:
+  tomcat:
+        max-threads: 1000
+        min-spare-threads: 30
   port: 8081
   context-path: /
 
 spring:
+  # thymeleaf
   thymeleaf:
     cache: false
     prefix: classpath:/templates/
     suffix: .html
     encoding: UTF-8
     content-type: text/html
+
+  # mysql
+  # 环境 dev|test|pro
+  profiles:
+    active: dev
   datasource:
-    name: test
-    #url: jdbc:mysql://192.168.1.132:3306/test
-    url: jdbc:mysql://localhost:3306/pm?useUnicode=true&characterEncoding=utf8&characterSetResults=utf8
-    username: root
-    password: root
     # 使用druid数据源
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.jdbc.Driver
 
+# mybatis
 mybatis:
   mapperLocations: classpath:mapper/*.xml
   typeAliasesPackage: com.ectrip.model,com.ectrip.vo
+  configLocation: classpath:mybatis-config.xml
 

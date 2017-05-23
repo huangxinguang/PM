@@ -1,5 +1,6 @@
 package com.ectrip.dao;
 
+import com.ectrip.base.BaseDAO;
 import com.ectrip.model.Version;
 import org.apache.ibatis.annotations.Param;
 
@@ -8,7 +9,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2017/5/11 0011.
  */
-public interface VersionDAO {
+public interface VersionDAO extends BaseDAO<Version> {
 
     /**
      * 批量保存版本

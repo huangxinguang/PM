@@ -1,5 +1,6 @@
 package com.ectrip.dao;
 
+import com.ectrip.base.BaseDAO;
 import com.ectrip.model.Modle;
 import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.apache.ibatis.annotations.Param;
@@ -9,14 +10,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2017/5/11 0011.
  */
-public interface ModleDAO {
-
-    /**
-     * 新增模块
-     * @param modle
-     * @return int
-     */
-    void saveModle(Modle modle);
+public interface ModleDAO extends BaseDAO<Modle>{
 
     /**
      * 批量插入
@@ -25,16 +19,6 @@ public interface ModleDAO {
      */
     void batchSaveModle(@Param("modleList") List<Modle> modleList);
 
-    /**
-     * 更新模块
-     * @param modle
-     * @return int
-     */
-    void updateModle(Modle modle);
-
-    Modle queryModleById(@Param("id")Integer id);
-
-    void delModle(@Param("id") Integer id);
 
     /**
      * 查找指定项目的模块列表

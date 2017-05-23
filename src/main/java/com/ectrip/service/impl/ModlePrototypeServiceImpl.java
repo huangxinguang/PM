@@ -40,19 +40,19 @@ public class ModlePrototypeServiceImpl implements ModlePrototypeService {
     public void saveModlePrototype(ModlePrototype modlePrototype) {
         modlePrototype.setOperateTime(DateUtil.getDateTime(new Date()));
         if(modlePrototype.getId() == null){
-            modlePrototypeDAO.saveModlePrototype(modlePrototype);
+            modlePrototypeDAO.save(modlePrototype);
         }else{
-            modlePrototypeDAO.updateModlePrototype(modlePrototype);
+            modlePrototypeDAO.update(modlePrototype);
         }
     }
 
     @Override
     public void delModlePrototype(Integer modelProId) {
-        modlePrototypeDAO.delModlePrototype(modelProId);
+        modlePrototypeDAO.delete(modelProId);
     }
 
     public ModlePrototype findModlePrototypeById(Integer id) {
-        return modlePrototypeDAO.findModlePrototype(id);
+        return modlePrototypeDAO.find(id);
     }
 
     @Override

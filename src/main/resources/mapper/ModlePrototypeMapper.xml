@@ -31,7 +31,7 @@
 	</sql>
 
 	<!-- 主键查询-->
-	<select id="findModlePrototype" resultMap="modlePrototypeResultMap">
+	<select id="find" resultMap="modlePrototypeResultMap" parameterType="int">
 		SELECT <include refid="Field"></include> FROM <include refid="tableName"></include>
 		WHERE ID=#{id}
 	</select>
@@ -50,11 +50,6 @@
 		</foreach>
 	</select>
 
-	<!-- 列表查询-->
-	<select id="queryModlePrototype" resultMap="modlePrototypeResultMap">
-		SELECT <include refid="Field"></include> FROM <include refid="tableName"></include>
-	</select>
-
 	<!-- 条件查询-->
 	<select id="findModlePrototypeListPage" resultMap="modlePrototypeResultMap">
 		SELECT <include refid="Field"></include> FROM <include refid="tableName"></include>
@@ -65,20 +60,20 @@
 	</select>
 
 	<!-- 修改-->
-	<update id="updateModlePrototype" parameterType="ModlePrototype">
+	<update id="update" parameterType="ModlePrototype">
 		UPDATE <include refid="tableName"></include>
 		SET MODLE_PROTOTYPE_NAME=#{modlePrototypeName},MODLE_PROTOTYPE_DESCRIBE=#{modlePrototypeDescribe},OPERATE_TIME=#{operateTime}
 		WHERE ID=#{id}
 	</update>
 
 	<!-- 删除-->
-	<delete id="delModlePrototype">
+	<delete id="delete" parameterType="int">
 		DELETE FROM <include refid="tableName"></include>
 		WHERE ID=#{id}
 	</delete>
 
 	<!-- 新增-->
-	<insert id="saveModlePrototype" useGeneratedKeys="true" keyProperty="id">
+	<insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="ModlePrototype">
 		insert into <include refid="tableName"></include>(
 			<include refid="Field"></include>
 		) values (

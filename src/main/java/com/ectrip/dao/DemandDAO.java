@@ -1,5 +1,6 @@
 package com.ectrip.dao;
 
+import com.ectrip.base.BaseDAO;
 import com.ectrip.model.Demand;
 import com.ectrip.vo.DemandVO;
 import com.github.pagehelper.PageInfo;
@@ -10,17 +11,7 @@ import java.util.List;
 /**
  * Created by huangxinguang on 2017/5/17 0017.
  */
-public interface DemandDAO {
-
-
-    void saveDemand(Demand demand);
-
-    Demand findDemand(@Param("id")Integer demandId);
-
-    void updateDemand(Demand demand);
-
-    void delDemand(@Param("id") Integer demandId);
-
+public interface DemandDAO extends BaseDAO<Demand>{
     /**
      * 需求列表
      * @param pageNo

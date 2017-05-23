@@ -42,9 +42,9 @@
 		#{projectStatus}
 	</sql>
 
-    <select id="findProject" resultMap="baseResultMap">
+    <select id="find" resultMap="baseResultMap" parameterType="int">
         SELECT <include refid="Field"></include> FROM <include refid="tableName"></include>
-        WHERE ID = #{projectId}
+        WHERE ID = #{id}
     </select>
 
     <select id="findAllProjectList" resultMap="baseResultMap">
@@ -52,7 +52,7 @@
     </select>
 
     <!-- 新增-->
-    <insert id="saveProject" useGeneratedKeys="true" keyProperty="id">
+    <insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="Project">
         insert into <include refid="tableName"></include>(
         <include refid="Field"></include>
         ) values (
@@ -60,7 +60,7 @@
         )
     </insert>
 
-    <update id="updateProject">
+    <update id="update" parameterType="Project">
         update <include refid="tableName"></include>
         set PROJECT_NAME = #{projectName},
         PROJECT_LEADER = #{projectLeader},
@@ -73,7 +73,7 @@
     </update>
 
     <!-- 删除-->
-    <delete id="delProject">
+    <delete id="delete" parameterType="int">
         DELETE FROM <include refid="tableName"></include>
         WHERE ID=#{id}
     </delete>

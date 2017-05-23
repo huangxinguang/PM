@@ -22,25 +22,25 @@ public class ProjectInfoServiceImpl implements ProjectInfoService {
     @Override
     public void saveProjectInfo(ProjectInfo projectInfo) {
         if(projectInfo.getId() != null) {
-            projectInfoDAO.updateProjectInfo(projectInfo);
+            projectInfoDAO.update(projectInfo);
         }else {
-            projectInfoDAO.saveProjectInfo(projectInfo);
+            projectInfoDAO.save(projectInfo);
         }
     }
 
     @Override
     public void delProjectInfo(Integer projectInfoId) {
-       projectInfoDAO.delProjectInfo(projectInfoId);
+       projectInfoDAO.delete(projectInfoId);
     }
 
     @Override
     public void updateProjectInfo(ProjectInfo projectInfo) {
-        projectInfoDAO.updateProjectInfo(projectInfo);
+        projectInfoDAO.update(projectInfo);
     }
 
     @Override
     public ProjectInfo queryProjectInfoById(Integer projectInfoId) {
-        return projectInfoDAO.findProjectInfo(projectInfoId);
+        return projectInfoDAO.find(projectInfoId);
     }
 
     @Override

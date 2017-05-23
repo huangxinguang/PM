@@ -52,12 +52,12 @@
 	</sql>
 
 	<!-- 主键查询-->
-	<select id="findDemand" resultMap="demandResultMap">
+	<select id="find" resultMap="demandResultMap" parameterType="int">
 		SELECT <include refid="Field"></include> FROM <include refid="tableName"></include>
 		WHERE ID=#{id}
 	</select>
 
-	<delete id="delDemand" >
+	<delete id="delete" parameterType="int">
 		DELETE  FROM <include refid="tableName"></include>
 		WHERE ID=#{id}
 	</delete>
@@ -91,7 +91,7 @@
 	</select>
 
 	<!-- 新增-->
-	<insert id="saveDemand" useGeneratedKeys="true" keyProperty="id">
+	<insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="Demand">
 		insert into <include refid="tableName"></include>(
 			<include refid="Field"></include>
 		) values (
@@ -100,14 +100,11 @@
 	</insert>
 
 	<!-- 更新-->
-	<update id="updateDemand">
+	<update id="update" parameterType="Demand">
 		UPDATE <include refid="tableName"></include>
 		SET
 		<if test="projectId!=null and projectId!=''">
 			PROJECT_ID=#{projectId},
-		</if>
-		<if test="demandName!=null and demandName!=''">
-			DEMAND_NAME=#{demandName},
 		</if>
 		<if test="demandDescribe!=null and demandDescribe!=''">
 			DEMAND_DESCRIBE=#{demandDescribe},
@@ -115,24 +112,25 @@
 		<if test="putTime!=null and putTime!=''">
 			PUT_TIME=#{putTime},
 		</if>
+		<if test="putUserId!=null and putUserId!=''">
+			PUT_USERID=#{putUserId},
+		</if>
 		<if test="version!=null and version!=''">
 			VERSION=#{version},
 		</if>
-		<if test="putUserId!=null and putUserId!=''">
-			PUT_USER_ID=#{putUserId},
-		</if>
 		<if test="exceptEndTime!=null and exceptEndTime!=''">
-			EXCEPTT_END_TIME=#{exceptEndTime},
+			EXCEPT_END_TIME=#{exceptEndTime},
 		</if>
 		<if test="actualEndTime!=null and actualEndTime!=''">
 			ACTUAL_END_TIME=#{actualEndTime},
 		</if>
 		<if test="completeUserId!=null and completeUserId!=''">
-			COMPLETE_USER_ID=#{completeUserId},
+			COMPLETE_USERID=#{completeUserId},
 		</if>
 		<if test="demandStatus!=null and demandStatus!=''">
-			DEMAND_STATUS=#{demandStatus}
+			DEMAND_STATUS=#{demandStatus},
 		</if>
+			DEMAND_NAME=#{demandName}
 		WHERE ID=#{id}
 	</update>
 

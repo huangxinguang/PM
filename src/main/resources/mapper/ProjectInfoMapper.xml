@@ -59,16 +59,10 @@
 	</sql>
 
     <!-- 主键查询-->
-    <select id="findProjectInfo" resultMap="projectInfoResultMap">
+    <select id="find" resultMap="projectInfoResultMap" parameterType="int">
         SELECT <include refid="Field"></include> FROM
         <include refid="tableName"></include>
         WHERE ID=#{id}
-    </select>
-
-    <select id="findProjectInfoByProjectId" resultMap="projectInfoResultMap">
-        SELECT <include refid="Field"></include> FROM
-        <include refid="tableName"></include>
-        WHERE PROJECT_ID=#{projectId}
     </select>
 
     <!-- 条件查询-->
@@ -95,7 +89,7 @@
     </select>
 
     <!-- 修改-->
-    <update id="updateProjectInfo" parameterType="ProjectInfo">
+    <update id="update" parameterType="ProjectInfo">
         UPDATE
         <include refid="tableName"></include>
         SET
@@ -104,13 +98,13 @@
     </update>
 
     <!-- 删除-->
-    <delete id="delProjectInfo">
+    <delete id="delete" parameterType="int">
         DELETE FROM <include refid="tableName"></include>
         WHERE ID=#{id}
     </delete>
 
     <!-- 新增-->
-    <insert id="saveProjectInfo" useGeneratedKeys="true" keyProperty="id">
+    <insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="ProjectInfo">
         insert into <include refid="tableName"></include>(
         <include refid="Field"></include>
         ) values (

@@ -33,12 +33,6 @@
 		#{modleState}
 	</sql>
 
-	<!-- 主键查询-->
-	<select id="findModle" resultMap="modleResultMap">
-		SELECT <include refid="Field"></include> FROM <include refid="tableName"></include>
-		WHERE ID={id}
-	</select>
-
 	<!-- 条件查询-->
 	<select id="queryModleList" resultMap="modleResultMap">
 		SELECT ID,PROJECT_ID,MODLE_NAME,MODLE_DESCRIBE,
@@ -79,7 +73,7 @@
 	</select>
 
 	<!-- 条件查询-->
-	<select id="queryModleById" resultMap="modleResultMap">
+	<select id="find" resultMap="modleResultMap" parameterType="int">
 		SELECT ID,PROJECT_ID,MODLE_NAME,MODLE_DESCRIBE,
 		(CASE WHEN MODLE_STATE='0' THEN '开发中'
 		ELSE '已完成'
@@ -89,20 +83,20 @@
 	</select>
 
 	<!-- 修改-->
-	<update id="updateModle" parameterType="Modle">
+	<update id="update" parameterType="Modle">
 		UPDATE <include refid="tableName"></include>
 		SET PROJECT_ID=#{projectId},MODLE_NAME=#{modleName},MODLE_DESCRIBE=#{modleDescribe},MODLE_STATE=#{modleState}
 		WHERE ID=#{id}
 	</update>
 
 	<!-- 删除-->
-	<delete id="delModle">
+	<delete id="delete" parameterType="int">
 		DELETE FROM <include refid="tableName"></include>
 		WHERE ID=#{id}
 	</delete>
 
 	<!-- 新增-->
-	<insert id="saveModle" useGeneratedKeys="true" keyProperty="id">
+	<insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="Modle">
 		insert into <include refid="tableName"></include>(
 			<include refid="Field"></include>
 		) values (

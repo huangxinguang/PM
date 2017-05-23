@@ -32,7 +32,7 @@ public interface DemandService {
     /**
      * 更新需求
      */
-    void updateDemand(Demand demand,List<Integer> modleIdList);
+    void updateDemand(Demand demand);
 
     /**
      * 查询

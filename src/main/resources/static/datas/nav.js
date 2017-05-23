@@ -22,5 +22,9 @@ var navs = [{
 		"title": "需求管理",
 		"icon": "&#xe60c;",
 		"href": "/demand/demandList.html"
-	}]
+	}, {
+        "title": "用户管理",
+        "icon": "&#xe60c;",
+        "href": "/user/userList.html"
+    }]
 }];

@@ -24,23 +24,20 @@ public class ModleServiceImpl implements ModleService {
     @Autowired
     private ModleDAO modleDAO;
 
-    @Autowired
-    private ModlePrototypeDAO modlePrototypeDAO;
-
     /**
      * 新增项目模块
      */
     public void saveModle(Modle modle){
         if(modle.getId() != null) {
-            modleDAO.updateModle(modle);
+            modleDAO.update(modle);
         }else {
-            modleDAO.saveModle(modle);
+            modleDAO.save(modle);
         }
     }
 
     @Override
     public Modle queryModleById(Integer modleId) {
-        return modleDAO.queryModleById(modleId);
+        return modleDAO.find(modleId);
     }
 
     @Override
@@ -53,12 +50,12 @@ public class ModleServiceImpl implements ModleService {
      * @param modle
      */
     public void updateModle(Modle modle){
-        modleDAO.updateModle(modle);
+        modleDAO.update(modle);
     }
 
     @Override
     public void delModle(Integer id) {
-        modleDAO.delModle(id);
+        modleDAO.delete(id);
     }
 
     /**

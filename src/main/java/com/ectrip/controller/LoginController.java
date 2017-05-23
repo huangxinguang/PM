@@ -1,7 +1,10 @@
 package com.ectrip.controller;
 
 import com.ectrip.base.BaseController;
+import com.ectrip.exception.BusinessException;
 import com.ectrip.model.User;
+import com.ectrip.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +16,8 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 public class LoginController extends BaseController {
+    @Autowired
+    private UserService userService;
 
     /**
      * 登陆页面
@@ -30,7 +35,12 @@ public class LoginController extends BaseController {
     @RequestMapping(value = "/loginIn.do",method = RequestMethod.POST)
     public ModelAndView loginIn(@ModelAttribute("user") User user) {
         ModelAndView mav = getModelAndView();
-        getSession().setAttribute("user",user.getUserName());
+        boolean success = userService.check(user.getUserName(),user.getPassword());
+        if(success) {
+            getSession().setAttribute("user",user.getUserName());
+        }else {
+            new BusinessException("用户名或密码错误");
+        }
         mav.setViewName("redirect:index.html");
         return mav;
     }

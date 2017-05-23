@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ectrip.dao.UserDAO">
+
+	<resultMap type="User" id="userResultMap">
+		<id column="ID" property="id"/>
+		<result column="USERNAME" property="userName"/>
+		<result column="PASSWORD" property="password"/>
+	</resultMap>
+
+	<!--表名 -->
+	<sql id="tableName">
+		USER
+	</sql>
+
+	<!-- 字段 -->
+	<sql id="Field">
+		ID,
+		USERNAME,
+		PASSWORD
+	</sql>
+
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{id},
+		#{userName},
+		#{password}
+	</sql>
+
+	<!-- 主键查询-->
+	<select id="find" resultMap="userResultMap" parameterType="int">
+		SELECT <include refid="Field"></include> FROM <include refid="tableName"></include>
+		WHERE ID=#{id}
+	</select>
+
+	<select id="findUserByName" resultMap="userResultMap" parameterType="string">
+		SELECT <include refid="Field"></include> FROM <include refid="tableName"></include>
+		WHERE USERNAME=#{userName}
+	</select>
+
+	<!-- 条件查询-->
+	<select id="findUserListPage" resultMap="userResultMap">
+		SELECT <include refid="Field"></include> FROM <include refid="tableName"></include>
+		WHERE 1=1
+		<if test="userName!=null and userName!=''">
+			AND USERNAME LIKE CONCAT('%', #{userName}, '%')
+		</if>
+	</select>
+
+	<update id="update" parameterType="User">
+		UPDATE <include refid="tableName"></include>
+		SET USERNAME=#{userName},PASSWORD=#{password}
+		WHERE ID=#{id}
+	</update>
+
+	<delete id="delete" parameterType="int">
+		DELETE FROM <include refid="tableName"></include>
+		WHERE ID=#{id}
+	</delete>
+
+	<!-- 新增-->
+	<insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="User">
+		insert into <include refid="tableName"></include>(
+			<include refid="Field"></include>
+		) values (
+			<include refid="FieldValue"></include>
+		)
+	</insert>
+
+</mapper>

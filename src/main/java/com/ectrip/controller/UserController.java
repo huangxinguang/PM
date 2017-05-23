@@ -9,7 +9,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by huangxinguang on 2017/5/22 下午5:37.
@@ -83,5 +87,18 @@ public class UserController extends BaseController {
         userService.deleteUser(userId);
         mav.setViewName("redirect:userList.html");
         return mav;
+    }
+
+    /**
+     * 解锁
+     * @param userName
+     * @param password
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/unLock.do",method = RequestMethod.GET)
+    public Object unLock(String userName,String password) {
+        Map<String,Object> result  = new HashMap<String,Object>();
+        return result;
     }
 }

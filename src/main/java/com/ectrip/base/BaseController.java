@@ -33,4 +33,8 @@ public abstract class BaseController {
         return getRequest().getSession();
     }
 
+    public String getCurrentUser() {
+        return getSession().getAttribute("user").toString();
+    }
+
 }

@@ -36,9 +36,9 @@ public class ProjectServiceImpl implements ProjectService {
         project.setOperateTime(DateUtil.getDateTime(new Date()));
 
         if(project.getId() != null) {
-            projectDao.updateProject(project);
+            projectDao.update(project);
         }else {
-            projectDao.saveProject(project);
+            projectDao.save(project);
 
             /*批量组装保存模块*/
             List<ModlePrototype> modlePrototypeList = modlePrototypeDAO.findModlePrototypeList(modleIdList);
@@ -60,12 +60,12 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public void updateProject(Project project) {
         project.setOperateTime(DateUtil.getDateTime(new Date()));
-        projectDao.updateProject(project);
+        projectDao.update(project);
     }
 
     @Override
     public Project queryProject(Integer projectId) {
-        return projectDao.findProject(projectId);
+        return projectDao.find(projectId);
     }
 
     @Override
@@ -82,6 +82,6 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public void deleteProject(Integer id) {
-        projectDao.delProject(id);
+        projectDao.delete(id);
     }
 }
