@@ -170,20 +170,17 @@ function lock($, layer) {
 			 */
 			var unlock = function(un, pwd) {
 				//这里可以使用ajax方法解锁
-				/*$.post('api/xx',{username:un,password:pwd},function(data){
+				$.post('user/unLock.do',{userName:un,password:pwd},function(data){
 				 	//验证成功
 					if(data.success){
 						//关闭锁屏层
+                        isShowLock = false;
 						layer.close(lockIndex);
 					}else{
+                        isShowLock = true;
 						layer.msg('密码输入错误..',{icon:2,time:1000});
 					}					
 				},'json');
-				*/
-				isShowLock = false;
-				//演示：默认输入密码都算成功
-				//关闭锁屏层
-				layer.close(lockIndex);
 			};
 		}
 	});

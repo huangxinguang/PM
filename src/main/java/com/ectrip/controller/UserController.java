@@ -110,9 +110,11 @@ public class UserController extends BaseController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/unLock.do",method = RequestMethod.GET)
+    @RequestMapping(value = "/unLock.do",method = RequestMethod.POST)
     public Object unLock(String userName,String password) {
+        boolean success = userService.check(userName,password);
         Map<String,Object> result  = new HashMap<String,Object>();
+        result.put("success",success);
         return result;
     }
 }
