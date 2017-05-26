@@ -7,3 +7,4 @@ springboot1.5.3 + mybatis + layui beginnerAdmin
 1、执行docs下的sql
 2、运行application
 
+![/Users/starlight/Desktop/q.png](/Users/starlight/Desktop/q.png)
