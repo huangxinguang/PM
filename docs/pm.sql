@@ -120,3 +120,5 @@ create index v_fk
 	on version (modle_id)
 ;
 
+INSERT INTO pm.User (username, password) VALUES ('admin', '123456');
+
